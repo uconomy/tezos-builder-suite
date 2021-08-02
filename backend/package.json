@@ -1,0 +1,32 @@
+{
+  "name": "tezos-beacon-remote-server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "start:prod": "NODE_ENV=production node ./dist/index.js",
+    "build": "rm -rf dist/ && tsc",
+    "test": "jest --testMatch='**/__tests__/**/*.spec.ts?(x)' --passWithNoTests",
+    "test:e2e": "jest --testMatch='**/__tests__/**/*.e2e.ts?(x)' --globalSetup='<rootDir>/globalSetup.ts' --passWithNoTests --runInBand"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.31.0",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@apollo/federation": "^0.27.0",
+    "apollo-server-express": "^3.0.2",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1"
+  }
+}

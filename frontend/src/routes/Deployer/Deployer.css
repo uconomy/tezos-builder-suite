@@ -1,0 +1,11 @@
+.page-header, .page-sider {
+  background: transparent;
+}
+
+.page-header {
+  padding: 0;
+}
+
+.page-content {
+  padding: 0 24px;
+}

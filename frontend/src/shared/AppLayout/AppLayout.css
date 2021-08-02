@@ -1,0 +1,20 @@
+.app-container {
+  margin:  0 auto;
+  height:  100vh;
+}
+
+.app-header {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  background-color: #333;
+  color: #FFF;
+  height: 60px;
+  padding: 0 24px;
+}
+
+.app-content {
+  padding: 0;
+  box-sizing: border-box;
+}
