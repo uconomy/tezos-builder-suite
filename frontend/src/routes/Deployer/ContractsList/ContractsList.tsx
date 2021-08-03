@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { List, Typography, Avatar } from 'antd';
+import { List, Avatar } from 'antd';
 import { FileTextOutlined } from '@ant-design/icons';
 import { Contract } from '../../../graphql/contract';
 

@@ -1,0 +1,12 @@
+{
+  "menuTitle": "Deployer",
+  "titles": {
+    "selectContract": "Select a contract",
+    "checkContract": "Verify contract \"{{name}}\" it's the right one"
+  },
+  "steps": {
+    "selectContract": "Choose a contract",
+    "checkContract": "Verify it's the right one"
+  },
+  "confirmContract": "Confirm Contract"
+}

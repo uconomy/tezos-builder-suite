@@ -18,7 +18,7 @@ specifiers:
   graphql: ^15.5.1
   graphql-tag: ^2.12.5
   i18next: ^20.3.5
-  prismjs: ^1.24.1
+  prism-react-renderer: ^1.2.1
   react: ^17.0.2
   react-dom: ^17.0.2
   react-i18next: ^11.11.4
@@ -43,7 +43,7 @@ dependencies:
   graphql: 15.5.1
   graphql-tag: 2.12.5_graphql@15.5.1
   i18next: 20.3.5
-  prismjs: 1.24.1
+  prism-react-renderer: 1.2.1_react@17.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-i18next: 11.11.4_i18next@20.3.5+react@17.0.2
@@ -9618,8 +9618,12 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /prismjs/1.24.1:
-    resolution: {integrity: sha512-mNPsedLuk90RVJioIky8ANZEwYm5w9LcvCXrxHlwf4fNVSn8jEipMybMkWUyyF0JhnC+C4VcOVSBuHRKs1L5Ow==}
+  /prism-react-renderer/1.2.1_react@17.0.2:
+    resolution: {integrity: sha512-w23ch4f75V1Tnz8DajsYKvY5lF7H1+WvzvLUcF0paFxkTHSp42RS0H5CttdN2Q8RR3DRGZ9v5xD/h3n8C8kGmg==}
+    peerDependencies:
+      react: '>=0.14.9'
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /process-nextick-args/2.0.1:

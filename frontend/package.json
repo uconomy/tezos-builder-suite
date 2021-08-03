@@ -18,7 +18,7 @@
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "i18next": "^20.3.5",
-    "prismjs": "^1.24.1",
+    "prism-react-renderer": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.11.4",

@@ -1,10 +1,8 @@
-import admin from './admin.json';
-import backoffice from './backoffice';
+import deployer from './deployer.json';
 import common from './common.json';
 
 const translation = {
-  ...backoffice,
-  admin,
+  deployer,
   common,
 };
 

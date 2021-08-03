@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Layout, PageHeader } from 'antd';
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { TezosToolkit } from '@taquito/taquito';
+// import { BeaconWallet } from "@taquito/beacon-wallet";
+// import { TezosToolkit } from '@taquito/taquito';
 import { useQuery } from '@apollo/client';
 import { Contract, GET_CONTRACTS } from "../../graphql/contract";
 
@@ -15,36 +15,52 @@ const {
   Header,
   Sider,
   Content,
-  Footer,
 } = Layout;
 
-enum NetworkType {
-  MAINNET = "mainnet",
-  DELPHINET = "delphinet",
-  EDONET = "edonet",
-  FLORENCENET = "florencenet",
-  GRANADANET = "granadanet",
-  CUSTOM = "custom"
-}
+const steps = [
+  "selectContract",
+  "checkContract",
+];
+
+// enum NetworkType {
+//   MAINNET = "mainnet",
+//   DELPHINET = "delphinet",
+//   EDONET = "edonet",
+//   FLORENCENET = "florencenet",
+//   GRANADANET = "granadanet",
+//   CUSTOM = "custom"
+// }
 
 export const Deployer: React.FC = () => {
   const { t } = useTranslation();
   const { data, loading, error } = useQuery<{ contracts: Contract[] }>(GET_CONTRACTS);
+
   const [selectedContract, setSelectedContract] = useState<Contract | undefined>();
+  const [step, setStep] = useState<number>(0);
 
-  const handleDeploy = useCallback(() => {
-    const options = { name: 'MyAwesomeDapp' };
-    const wallet = new BeaconWallet(options);
-
-    const Tezos = new TezosToolkit("");
-
-    wallet
-      .requestPermissions({ network: { type: NetworkType.FLORENCENET } })
-      .then((_) => wallet.getPKH())
-      .then((address: string) => console.log(`Your address: ${address}`));
-
-    Tezos.setWalletProvider(wallet);
+  const selectContract = useCallback((contract: Contract) => {
+    setStep(1);
+    setSelectedContract(contract);
   }, []);
+
+  const delectContract = useCallback(() => {
+    setStep(0);
+    setSelectedContract(undefined);
+  }, []);
+
+  // const handleDeploy = useCallback(() => {
+  //   const options = { name: 'MyAwesomeDapp' };
+  //   const wallet = new BeaconWallet(options);
+
+  //   const Tezos = new TezosToolkit("");
+
+  //   wallet
+  //     .requestPermissions({ network: { type: NetworkType.FLORENCENET } })
+  //     .then((_) => wallet.getPKH())
+  //     .then((address: string) => console.log(`Your address: ${address}`));
+
+  //   Tezos.setWalletProvider(wallet);
+  // }, []);
 
   if (loading) {
     return (
@@ -61,51 +77,26 @@ export const Deployer: React.FC = () => {
     )
   }
 
-  const title = selectedContract ? `Deploying ${selectedContract.name}` : 'Select a contract';
+  const title = t(`deployer.titles.${steps[step]}`, {
+    name: selectedContract?.name 
+  });
 
   return (
     <Layout>
       <Header className="page-header">
-        <PageHeader title={title} onBack={selectedContract && (() => setSelectedContract(undefined))} />
+        <PageHeader title={title} onBack={selectedContract && delectContract} />
       </Header>
       <Layout>
         <Content className="page-content">
           { !selectedContract
-            ? <ContractsList contracts={data?.contracts} onSelect={setSelectedContract} />
-            : <CodeViewer language="pascaligo" code="type storage is int
-            type parameter is
-              Increment of int
-            | Decrement of int
-            | Reset
-            type return is list (operation) * storage
-            // Two entrypoints
-            function add (const store : storage; const delta : int) : storage is 
-              store + delta
-            function sub (const store : storage; const delta : int) : storage is 
-              store - delta
-            (* Main access point that dispatches to the entrypoints according to
-               the smart contract parameter. *)
-            function main (const action : parameter; const store : storage) : return is
-             ((nil : list (operation)),    // No operations
-              case action of
-                Increment (n) -> add (store, n)
-              | Decrement (n) -> sub (store, n)
-              | Reset         -> 0
-              end)" />
+            ? <ContractsList contracts={data?.contracts} onSelect={selectContract} />
+            : <CodeViewer fileName={selectedContract.name} code={selectedContract.code} lineNumbers />
           }
         </Content>
-        <Sider className="page-sider">
-          <Summary />
+        <Sider className="page-sider" width={300}>
+          <Summary step={step} contractNane={selectedContract && selectedContract.name} />
         </Sider>
       </Layout>
     </Layout>
   );
-
-  // return (
-  //   <>
-  //     <h1>Deployer</h1>
-  //     {data?.contracts.map(x => x.name)}
-  //     <Button onClick={handleDeploy}>Deploy</Button>
-  //   </>
-  // )
 }
