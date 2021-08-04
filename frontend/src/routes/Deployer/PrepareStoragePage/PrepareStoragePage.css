@@ -1,0 +1,24 @@
+.page-header, .page-sider {
+  background: transparent;
+}
+
+.page-header {
+  padding: 0;
+}
+
+.page-sider {
+  padding: 24px;
+  border-left: 1px solid #CCC;
+}
+
+.page-content {
+  padding: 12px 24px 24px 24px;
+}
+
+.page-container {
+  height: 100%;
+}
+
+.code-viewer {
+  height: 100%;
+}

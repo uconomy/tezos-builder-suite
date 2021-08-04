@@ -2,7 +2,8 @@
   "menuTitle": "Deployer",
   "titles": {
     "selectContract": "Select a contract",
-    "checkContract": "Verify contract \"{{name}}\" it's the right one"
+    "checkContract": "Verify contract \"{{name}}\" it's the right one",
+    "prepareStorage": "Prepare initial contract Storage"
   },
   "steps": {
     "selectContract": "Choose a contract",
@@ -14,5 +15,8 @@
   "loadingContracts": "Loading contracts...",
   "noContractFound": "No contract found.",
   "errorLoadingContracts": "Error while loading contracts:",
-  "confirmContract": "Confirm Contract"
+  "confirmContract": "Confirm Contract",
+  "storage": {
+    "jsonMichelson": "Storage structure"
+  }
 }

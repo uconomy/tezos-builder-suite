@@ -23,7 +23,7 @@ export const Summary: React.FC = (props) => {
   const history = useHistory();
 
   const renderConfirmButton = () => (
-    <Button type="primary" className="summary-spacer" icon={<AimOutlined />}>
+    <Button type="primary" className="summary-spacer" icon={<AimOutlined />} onClick={() => history.push('prepare-storage')}>
       {t(`deployer.confirmContract`)}
     </Button>
   );

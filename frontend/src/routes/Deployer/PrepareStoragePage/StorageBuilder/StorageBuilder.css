@@ -1,0 +1,23 @@
+.builder-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border: 1px solid #DEDEDE;
+}
+
+.builder-block .type-tag {
+  width: 5em;
+  text-align: center;
+}
+
+.builder-block label {
+  font-weight: 600;
+  margin-right: 1em;;
+}
+
+.builder-block .ant-form-item {
+  margin-bottom: 0;
+}
