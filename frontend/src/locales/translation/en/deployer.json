@@ -6,7 +6,13 @@
   },
   "steps": {
     "selectContract": "Choose a contract",
-    "checkContract": "Verify it's the right one"
+    "checkContract": "Verify it's the right one",
+    "prepareStorage": "Prepare initial Storage",
+    "preview": "Preview deploy costs",
+    "deploy": "Deploy"
   },
+  "loadingContracts": "Loading contracts...",
+  "noContractFound": "No contract found.",
+  "errorLoadingContracts": "Error while loading contracts:",
   "confirmContract": "Confirm Contract"
 }

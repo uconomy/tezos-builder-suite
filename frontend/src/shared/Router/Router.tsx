@@ -10,7 +10,10 @@ export type RouterProps = {
   defaultRoute: string; // Default subnav route
 }
 
-const computeRoute = (match: match<{}>, path: string) => (match.path === path) ? path : `${match.path}${path}`;
+const computeRoute = (match: match<{}>, path: string) => 
+  (match.path === path)
+  ? path
+  : `${match.path}${match.path.endsWith('/') ? '' : '/'}${path}`;
 
 export const Router: React.FC<RouterProps> = ({ routes, routerRoot, defaultRoute }) => {
   const match = useRouteMatch();

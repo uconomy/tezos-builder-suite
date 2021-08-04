@@ -6,13 +6,13 @@ import './prism-setup';
 import './CodeViewer.css';
 
 export type CodeViewerProps = {
+  className?: string;
   code: string;
-  lineNumbers?: boolean;
   fileName?: string;
   language?: string;
 }
 
-export const CodeViewer: React.FC<CodeViewerProps> = ({ language, fileName, code, lineNumbers }) => {
+export const CodeViewer: React.FC<CodeViewerProps> = ({ language, fileName, code, className }) => {
   const [_language, setLanguage] = useState(language);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ language, fileName, code
 
   return (
     <Highlight {...defaultProps} language={_language as Language} code={code} theme={defaultTheme}>
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
+      {({ className: _className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={`${_className}${className ? ` ${className}` : ''}`} style={style}>
           {tokens.map((line, i) => (
             <div {...getLineProps({ line, key: i })}>
               <div className="token-line-no">{i + 1}</div>
