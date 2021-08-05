@@ -3,7 +3,7 @@ import common from './common.json';
 
 const translation = {
   deployer,
-  common,
+  ...common,
 };
 
 // Leave exports as they are here

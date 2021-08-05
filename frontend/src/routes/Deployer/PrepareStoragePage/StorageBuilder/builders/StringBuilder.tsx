@@ -1,35 +1,19 @@
+import { Input } from 'antd';
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { Tag, Form, Input } from 'antd';
-
-import { UnwrappedMichelsonObject } from "../../michelsonStorageParser";
-import { extractAnnots } from "./builder";
 
 import "../StorageBuilder.css";
+import { Builder, BuilderProps } from "./Builder";
 
-export interface StringBuilderProps {
-  object: UnwrappedMichelsonObject;
-  index: number;
-}
-
-export const StringBuilder: React.FC<StringBuilderProps> = (props) => {
+export const StringBuilder: React.FC<BuilderProps> = (props) => {
   const {
     object,
     index,
+    itemProps,
   } = props;
   
-  const { t } = useTranslation();
-  const name = extractAnnots(index, object.annots);
-  
   return (
-    <div className="builder-block">
-      <div>
-        <Tag className="type-tag" color="cyan">String</Tag>
-        <label>{name} ({object.prim})</label>
-      </div>
-      <Form.Item name={name}>
-        <Input />
-      </Form.Item>
-    </div>
+    <Builder object={object} index={index} itemProps={{ ...itemProps, className: "full-width" }}>
+      <Input />
+    </Builder>
   );
 }

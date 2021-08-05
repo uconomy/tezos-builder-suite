@@ -53,12 +53,15 @@ export const PrepareStoragePage: React.FC = () => {
         <PageHeader title={t(`deployer.titles.prepareStorage`, { name: contract.name })} onBack={goBack} />
       </Header>
       <Content className="page-content">
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Tab 1" key="1">
+        <Tabs defaultActiveKey="1" className="page-tabs">
+          <TabPane tab={t('deployer.storage.content')} key="1">
             <StorageBuilder unwrappedMichelson={unwrappedMichelson} />
           </TabPane>
           <TabPane tab={t('deployer.storage.jsonMichelson')} key="2">
             <CodeViewer code={michelsonStorage?.getMichelsonStorage() || "..."} language="json" className="code-viewer" />
+          </TabPane>
+          <TabPane tab={t('deployer.storage.contractCode')} key="3">
+            <CodeViewer code={contract.code} fileName={contract.name} className="code-viewer" />
           </TabPane>
         </Tabs>
       </Content>

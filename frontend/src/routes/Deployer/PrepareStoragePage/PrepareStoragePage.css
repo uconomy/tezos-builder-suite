@@ -22,3 +22,11 @@
 .code-viewer {
   height: 100%;
 }
+
+.page-tabs {
+  height: 100%;
+}
+
+.page-tabs .ant-tabs-content-holder {
+  overflow: auto;
+}

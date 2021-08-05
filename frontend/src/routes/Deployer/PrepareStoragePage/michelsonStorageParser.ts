@@ -1,18 +1,40 @@
+export enum MichelsonPrims {
+  UNIT = 'unit',
+  BOOL = 'bool',
+  BYTES = 'bytes',
+  NAT = 'nat',
+  INT = 'int',
+  MUTEZ = 'mutez',
+  TIMESTAMP = 'timestamp',
+  STRING = 'string',
+  ADDRESS = 'address',
+  KEY = 'key',
+  KEY_HASH = 'key_hash',
+  SIGNATURE = 'signature',
+  STORAGE = 'storage',
+  LIST = 'list',
+  SET = 'set',
+  MAP = 'map',
+  BIG_MAP = 'big_map',
+  PAIR = 'pair',
+  OR = 'or',
+}
+
 type PlainMichelsonObject = {
-  prim: 'unit' | 'bool' | 'byte' | 'nat' | 'int' | 'string' | 'address';
-  annots?: string;
+  prim: 'unit' | 'bool' | 'bytes' | 'nat' | 'int' | 'mutez' | 'timestamp' | 'string' | 'address' | 'key' | 'key_hash' | 'signature';
+  annots?: string[];
 }
 
 type SimpleMichelsonObject = {
-  prim: 'storage' | 'list';
+  prim: 'storage' | 'list' | 'set';
   args: [MichelsonObject],
-  annots?: string;
+  annots?: string[];
 }
 
 type ComplexMichelsonObject = {
   prim: 'map' | 'big_map' | 'pair' | 'or';
   args: [MichelsonObject, MichelsonObject],
-  annots?: string;
+  annots?: string[];
 }
 
 type MichelsonObject = (PlainMichelsonObject | SimpleMichelsonObject | ComplexMichelsonObject);

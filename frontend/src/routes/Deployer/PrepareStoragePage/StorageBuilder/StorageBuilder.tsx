@@ -1,39 +1,41 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useCallback } from "react";
 import { Form } from 'antd';
 
 import { UnwrappedMichelsonObject } from "../michelsonStorageParser";
-import { BoolBuilder } from "./builders/BoolBuilder";
-import { BigMapBuilder } from "./builders/BigMapBuilder";
-import { StringBuilder } from "./builders/StringBuilder";
 
 import "./StorageBuilder.css";
+import { renderBuilder } from "./builders";
+import { useDeployState } from "../../state";
 
 export interface StorageBuilderProps {
   unwrappedMichelson?: UnwrappedMichelsonObject[];
 }
 
 export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichelson }) => {
-  const { t } = useTranslation();
-  
-  const renderBuilder = (o: UnwrappedMichelsonObject, index: number) => {
-    switch (o.prim) {
-      case 'bool':
-        return <BoolBuilder key={`storage-${index}`} object={o} index={index} />
-      case 'big_map':
-        return <BigMapBuilder key={`storage-${index}`} object={o} index={index} />
-      default:
-        return <StringBuilder key={`storage-${index}`} object={o} index={index} />
-      // default:
-      //   return <div>Unknown prim {o.prim}</div>
+  const [storageForm] = Form.useForm();
+  const [, setActiveForm] = useDeployState('activeForm');
+  const [, setInitialStorage] = useDeployState('initalStorage');
+
+  useEffect(() => {
+    setActiveForm(storageForm);
+
+    return () => {
+      setActiveForm(undefined);
     }
-  }
+  }, [storageForm, setActiveForm]);
+
+  const handleFinish = useCallback((formValues: any) => {
+    console.log('FORM FINISH', JSON.stringify(formValues, null, 2));
+
+    setInitialStorage(formValues);
+  }, [setInitialStorage]);
 
   return (
     <Form 
-      onFieldsChange={(o, allFields) => console.log('FORM CHANGED', allFields.map(x => x.name + ": " + x.value))}
+      form={storageForm}
+      onFinish={handleFinish}
     >
-      {unwrappedMichelson?.map(renderBuilder)}
+      {unwrappedMichelson?.map((x, i) => renderBuilder(x, i))}
     </Form>
   );
 }

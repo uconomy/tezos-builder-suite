@@ -17,6 +17,9 @@
   "errorLoadingContracts": "Error while loading contracts:",
   "confirmContract": "Confirm Contract",
   "storage": {
-    "jsonMichelson": "Storage structure"
-  }
+    "content": "Storage",
+    "jsonMichelson": "Storage structure",
+    "contractCode": "Contract code"
+  },
+  "verifyAndSaveStorage": "Verify and save"
 }

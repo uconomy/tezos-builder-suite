@@ -1,6 +1,6 @@
 import { Steps, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { AimOutlined } from '@ant-design/icons';
+import { AimOutlined, SaveOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import "./Summary.css";
@@ -16,15 +16,28 @@ const orderedSteps = [
   'deploy'
 ]
 
-export const Summary: React.FC = (props) => {
+export const Summary: React.FC = () => {
   const [contract] = useDeployState('contract');
+  const [activeForm] = useDeployState('activeForm');
 
   const { t } = useTranslation();
   const history = useHistory();
 
-  const renderConfirmButton = () => (
+  const renderConfirmContractButton = () => (
     <Button type="primary" className="summary-spacer" icon={<AimOutlined />} onClick={() => history.push('prepare-storage')}>
       {t(`deployer.confirmContract`)}
+    </Button>
+  );
+
+  const renderVerifyStorageButton = () => (
+    <Button 
+      type="primary" 
+      className="summary-spacer" 
+      icon={<SaveOutlined />}
+      disabled={!activeForm}
+      onClick={() => { activeForm?.submit(); history.push('preview') }}
+    >
+      {t(`deployer.verifyAndSaveStorage`)}
     </Button>
   );
 
@@ -33,8 +46,8 @@ export const Summary: React.FC = (props) => {
   return (
     <Steps direction="vertical" size="small" current={step}>
       <Step title={t(`deployer.steps.selectContract`)} description={contract && contract.name} />
-      <Step title={t(`deployer.steps.checkContract`)} description={step === 1 && renderConfirmButton()} />
-      <Step title={t(`deployer.steps.prepareStorage`)} />
+      <Step title={t(`deployer.steps.checkContract`)} description={step === 1 && renderConfirmContractButton()} />
+      <Step title={t(`deployer.steps.prepareStorage`)} description={step === 2 && renderVerifyStorageButton()} />
       <Step title={t(`deployer.steps.preview`)} />
       <Step title={t(`deployer.steps.deploy`)}  />
     </Steps>
