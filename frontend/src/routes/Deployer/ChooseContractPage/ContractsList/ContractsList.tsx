@@ -41,7 +41,7 @@ export const ContractsList: React.FC<ContractsListProps> = (props) => {
            <Item.Meta
             avatar={<Avatar icon={<FileTextOutlined />} />}
             title={item.name}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+            description={`${item.code.length} bytes`}
           />
         </Item>
       )}

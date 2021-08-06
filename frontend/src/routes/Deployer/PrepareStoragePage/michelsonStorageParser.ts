@@ -20,29 +20,31 @@ export enum MichelsonPrims {
   OR = 'or',
 }
 
-type PlainMichelsonObject = {
+export type PlainMichelsonObject = {
   prim: 'unit' | 'bool' | 'bytes' | 'nat' | 'int' | 'mutez' | 'timestamp' | 'string' | 'address' | 'key' | 'key_hash' | 'signature';
   annots?: string[];
 }
 
-type SimpleMichelsonObject = {
+export type SimpleMichelsonObject = {
   prim: 'storage' | 'list' | 'set';
   args: [MichelsonObject],
   annots?: string[];
 }
 
-type ComplexMichelsonObject = {
+export type ComplexMichelsonObject = {
   prim: 'map' | 'big_map' | 'pair' | 'or';
   args: [MichelsonObject, MichelsonObject],
   annots?: string[];
 }
 
-type MichelsonObject = (PlainMichelsonObject | SimpleMichelsonObject | ComplexMichelsonObject);
+export type MichelsonObject = (PlainMichelsonObject | SimpleMichelsonObject | ComplexMichelsonObject);
 
-export type UnwrappedMichelsonObject = MichelsonObject & {
+export type UnwrappedStructure = {
   key?: MichelsonObject[];
   value?: MichelsonObject[];
 };
+
+export type UnwrappedMichelsonObject = MichelsonObject & UnwrappedStructure;
 
 export class MichelsonStorageParser {
   michelsonStorage: SimpleMichelsonObject;
@@ -58,8 +60,6 @@ export class MichelsonStorageParser {
   }
 
   private processBlock(block: UnwrappedMichelsonObject): UnwrappedMichelsonObject[] {
-    console.log('PROCESS BLOCK', block.prim);
-
     switch(block.prim) {
       case 'list':
         const list = block as SimpleMichelsonObject;
@@ -84,6 +84,17 @@ export class MichelsonStorageParser {
           key: big_map_key,
           value: big_map_value,
         }];
+        case 'or':
+          const or = block as ComplexMichelsonObject;
+  
+          const or_args = or.args;
+          const or_args1 = Array.isArray(or_args[0]) ? this.unwrapBlock(or_args[0]) : this.unwrapBlock([or_args[0]]);
+          const or_args2 = Array.isArray(or_args[1]) ? this.unwrapBlock(or_args[1]) : this.unwrapBlock([or_args[1]]);
+  
+          return [{
+            ...or,
+            value: [...or_args1, ...or_args2],
+          }];
       case 'pair':
         return block.args as [MichelsonObject, MichelsonObject];
       default:

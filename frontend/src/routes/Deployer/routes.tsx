@@ -3,6 +3,7 @@ import { ChooseContractPage } from './ChooseContractPage';
 import { RouteDefinition } from '../routes.types';
 import { CheckContractPage } from './CheckContractPage';
 import { PrepareStoragePage } from './PrepareStoragePage';
+import { PreviewDeployPage } from './PreviewDeployPage';
 
 export const deployerRoutes: RouteDefinition[] = [
   {
@@ -18,6 +19,11 @@ export const deployerRoutes: RouteDefinition[] = [
   {
     path: "prepare-storage",
     component: () => <PrepareStoragePage />,
+    exact: true,
+  },
+  {
+    path: "preview",
+    component: () => <PreviewDeployPage />,
     exact: true,
   }
 ];

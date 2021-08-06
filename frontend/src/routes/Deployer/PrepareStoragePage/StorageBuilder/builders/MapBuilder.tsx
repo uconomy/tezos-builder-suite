@@ -26,14 +26,19 @@ export const MapBuilder: React.FC<BuilderProps> = (props) => {
   const renderMapBuilders = (name: string, data: FormListFieldData, list: UnwrappedMichelsonObject[]) => {
     return (
       <>
-        {
-          list.map((item, index) => (
-            renderBuilder({ ...item }, index, {
-              name: [data.name, name, index.toString()],
-              fieldKey: [data.fieldKey, name, index.toString()],
-              rules: [{ required: true }]
-            })
-          ))
+        { list.length > 1
+          ? list.map((item, index) => (
+              renderBuilder({ ...item }, index, {
+                name: [data.name, name, index.toString()],
+                fieldKey: [data.fieldKey, name, index.toString()],
+                rules: [{ required: true }]
+              })
+            ))
+          : renderBuilder({ ...list[0] }, 0, {
+            name: [data.name, name],
+            fieldKey: [data.fieldKey, name],
+            rules: [{ required: true }]
+          })
         }
       </>
     );

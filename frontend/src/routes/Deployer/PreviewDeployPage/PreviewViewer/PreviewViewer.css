@@ -1,0 +1,68 @@
+.progress-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+  /* background: #FFF; */
+  color: #777;
+}
+
+.progress-card .progress-card-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.progress-card label {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.big-icon {
+  font-size: 75px;
+  margin-right: 24px;
+}
+
+.estimate-number {
+  text-align: right;
+  font-weight: 500;
+  color: #9b59b6;
+}
+
+.estimate-bytes {
+  text-align: right;
+  font-weight: 500;
+  color: #f39c12;
+}
+
+.estimate-mutez {
+  text-align: right;
+  font-weight: 500;
+  color: #3498db;
+}
+
+.estimate-tez {
+  font-weight: bold;
+  color: #2980b9;
+}
+
+.totalCost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 40px;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.estimates {
+  border: 1px solid #dedede;
+}
+
+.estimates .ant-table-row:last-of-type {
+  background: rgba(0, 140, 255, 0.2)
+}

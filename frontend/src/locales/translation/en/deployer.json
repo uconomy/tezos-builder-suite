@@ -3,13 +3,14 @@
   "titles": {
     "selectContract": "Select a contract",
     "checkContract": "Verify contract \"{{name}}\" it's the right one",
-    "prepareStorage": "Prepare initial contract Storage"
+    "prepareStorage": "Prepare initial contract Storage",
+    "preview": "Preview deploy operation and costs for \"{{name}}\""
   },
   "steps": {
     "selectContract": "Choose a contract",
     "checkContract": "Verify it's the right one",
     "prepareStorage": "Prepare initial Storage",
-    "preview": "Preview deploy costs",
+    "preview": "Preview deploy operation",
     "deploy": "Deploy"
   },
   "loadingContracts": "Loading contracts...",
@@ -19,7 +20,33 @@
   "storage": {
     "content": "Storage",
     "jsonMichelson": "Storage structure",
-    "contractCode": "Contract code"
+    "contractCode": "Contract code",
+    "storageContent": "Storage Content",
+    "preview": "Deploy preview"
   },
-  "verifyAndSaveStorage": "Verify and save"
+  "verifyAndSaveStorage": "Verify and save",
+  "previewOrigination": "Preview Origination",
+  "signer": {
+    "loadingEndpointSettings": "Loading Tezos endpoint settings...",
+    "endpointSettingsError": "Failed to retrieve Tezos endpoint settings",
+    "wallet": {
+      "name": "Tezos Beacon Remote",
+      "disclaimerText": "This signer will be used only to perform actions activated by a specific user action."
+    }
+  },
+  "estimates": {
+    "baseFeeMutez": "Base Fee",
+    "minimalFeeMutez": "Minimal Fee",
+    "suggestedFeeMutez": "Suggested Fee",
+    "operationFeeMutez": "Operation Fee",
+    "burnFeeMutez": "Burn Fee",
+    "gasLimit": "Gas limit",
+    "consumedMilligas": "Consumed Gas",
+    "storageLimit": "Storage limit",
+    "opSize": "Operation size",
+    "minimalFeePerStorageByteMutez": "Minimal Fee per Storage byte",
+    "totalCost": "Total Cost"
+  },
+  "retrievingEstimates": "Retrieving estimates...",
+  "retrievingEstimatesInfo": "Results will be present in a few."
 }
