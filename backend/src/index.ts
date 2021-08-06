@@ -1,12 +1,14 @@
 import express from 'express';
 import { Contract } from './domain/contract';
+import { Endpoint, NetworkType } from './domain/endpoint';
 import { createApolloServer, schema } from './graphql';
 
-async function init(contracts: Contract[]) {
+async function init(endpoint: Endpoint, contracts: Contract[]) {
   const app = express();
 
   // Instance Graphql server
   const server = await createApolloServer(app, schema, () => ({
+    endpoint,
     contracts
   }));
 
@@ -130,8 +132,11 @@ let main = ([action, store] : [parameter, storage]) : return_ => {
 `;
 
 
-init([
-  {
+init({
+    url: "https://testnet-tezos.giganode.io/",
+    protocolVersion: NetworkType.GRANADANET,
+  },
+  [{
     name: "My PascaLIGO Contract.ligo",
     code: PASCALIGO_EXAMPLE,
     michelson: JSON.stringify([{}, {}, {}]),
@@ -150,5 +155,5 @@ init([
     name: "My JsLIGO Contract.jsligo",
     code: JSLIGO_EXAMPLE,
     michelson: JSON.stringify([{}, {}, {}]),
-  }
+  }]
 ]);
