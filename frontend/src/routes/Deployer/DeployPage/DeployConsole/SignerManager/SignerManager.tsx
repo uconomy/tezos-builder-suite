@@ -1,12 +1,13 @@
-import { SearchOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/client';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { TezosToolkit } from '@taquito/taquito';
 import { Button } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Endpoint, GET_ENDPOINT } from '../../../../graphql/endpoint';
-import { useDeployState } from '../../state';
+import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
+import { ProgressCard } from '../../../../../shared/ProgressCard';
+import { useDeployState } from '../../../state';
 import "./SignerManager.css";
 
 
@@ -79,13 +80,34 @@ export const SignerManager: React.FC = () => {
   }
 
   return (
-    <div>
-      Working on endpoint: {data?.endpoint.url}
-
-      {!!signer 
-        ? <>Signer will be <em>{signer}</em></>
-        : <Button onClick={handleSetupSigner} disabled={!!signer} loading={loading || !!error || !Tezos} icon={<UserOutlined />}>Choose operations signer</Button>
+    <div className="signer-manager">
+      {!!signer &&
+        <ProgressCard
+          Icon={UserOutlined}
+          title={t('deployer.signerWarning', { signer })}
+          subtitle={t('deployer.signerWarningInfo')}
+        />
       }
+
+      <div className="call-to-action">
+        { !signer 
+          ? <Button 
+              type="primary"
+              size="large"
+              onClick={handleSetupSigner}
+              disabled={!!signer}
+              loading={loading || !!error || !Tezos}
+              icon={<UserOutlined />}
+            >{t('deployer.chooseSigner')}</Button>
+          : <Button 
+              type="default"
+              size="middle"
+              onClick={handleSetupSigner}
+              loading={loading || !!error || !Tezos}
+              icon={<UserSwitchOutlined />}
+            >{t('deployer.changeSigner')}</Button>
+        }
+      </div>
     </div>
   );
 }

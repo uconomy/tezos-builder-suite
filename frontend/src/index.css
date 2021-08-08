@@ -19,6 +19,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.call-to-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 24px;
+  box-sizing: border-box;
+}
+
+.mega-button {
+  font-size: 25px;
+  height: 60px;
+}
+
 @media screen and (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

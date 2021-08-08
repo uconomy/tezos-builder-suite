@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Table } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { WarningOutlined } from '@ant-design/icons';
+import { useQuery } from '@apollo/client';
 
 import "./PreviewViewer.css";
-import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
 import { Tezos } from '../../../../shared/Tezos';
-
-export interface PreviewViewerProps {
-  estimate?: Estimate;
-  onRequestPreview: () => void;
-};
+import { useDeployState } from '../../state';
+import { ProgressCard } from '../../../../shared/ProgressCard';
+import { Endpoint, GET_ENDPOINT } from '../../../../graphql/endpoint';
+import { TezosToolkit } from '@taquito/taquito';
+import { importKey } from '@taquito/signer';
 
 type ResultLine = {
   value: number;
@@ -33,20 +33,78 @@ const types: { [x: string]: ResultLine['type'] } = {
   "totalCost": 'mutez',
 }
 
-export const PreviewViewer: React.FC<PreviewViewerProps> = (props) => {
-  const { estimate, onRequestPreview } = props;
-
+export const PreviewViewer: React.FC = () => {
   const { t } = useTranslation();
 
-  const [dataSource, setDataSource] = useState<Results>();
+  const [contract] = useDeployState('contract');
+  const [initialStorage] = useDeployState('initialStorage');
 
-  useEffect(() => {
-    if(!estimate) {
-      onRequestPreview && onRequestPreview();
+  const { data, loading, error } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
+  const [estimate, setEstimates] = useDeployState('estimates');
+
+  const [dataSource, setDataSource] = useState<Results>();
+  const [previewError, throwPreviewError] = useState<Error>();
+
+  const handlePreviewRequest = useCallback(async () => {
+    if (!contract || !initialStorage || !data || loading || error) {
       return;
     }
 
-    const data: Results = Object.keys(types)
+    const LocalTezos = new TezosToolkit(data.endpoint.url);
+
+    const faucet = {
+      "mnemonic": [
+        "home",
+        "project",
+        "ladder",
+        "wrestle",
+        "job",
+        "opera",
+        "diesel",
+        "pelican",
+        "abuse",
+        "regret",
+        "thought",
+        "copy",
+        "jar",
+        "lens",
+        "update"
+      ],
+      "secret": "8590ffddd7accb49fbb530ef24ff659b1f01314f",
+      "amount": "8446026769",
+      "pkh": "tz1PXAMbT7qszu7kzTCdbf6ZWJ5draAqSQCz",
+      "password": "1VnbD0Fpmv",
+      "email": "cxjfzamw.rpqmqqvb@tezos.example.org"
+    };
+    try {
+      importKey(LocalTezos, faucet.email, faucet.password, faucet.mnemonic.join(' '), faucet.secret);
+    } catch(err) {
+      console.log('FAILED TO IMPORT KEY', err);
+    }
+
+    try {
+      const op = await LocalTezos.estimate.originate({
+        code: JSON.parse(contract.michelson),
+        storage: initialStorage,
+      });
+
+      setEstimates(op);
+    } catch(err) {
+      throwPreviewError(err);
+    }
+  }, [contract, initialStorage, data, loading, error]);
+
+  useEffect(() => {
+    if (!contract || !initialStorage || !data || loading || error) {
+      return;
+    }
+
+    if(!estimate) {
+      handlePreviewRequest();
+      return;
+    }
+
+    const estimatesData: Results = Object.keys(types)
       .map(name => {
         let value = (estimate as any)[name] as number;
         let type = types[name];
@@ -67,8 +125,8 @@ export const PreviewViewer: React.FC<PreviewViewerProps> = (props) => {
         }
       });
 
-    setDataSource(data);
-  }, [estimate, onRequestPreview]);
+    setDataSource(estimatesData);
+  }, [estimate, contract, initialStorage, data, loading, error]);
 
   const columns = [
     {
@@ -88,17 +146,25 @@ export const PreviewViewer: React.FC<PreviewViewerProps> = (props) => {
     }
   ];
 
+  if (error || previewError) {
+    return (
+      <ProgressCard 
+        Icon={WarningOutlined}
+        title={error ? t('endpointSettingsError') : previewError?.message || ''}
+        subtitle={error ? error.message : previewError?.stack || ''}
+      />
+    );
+  }
+
   return (
     <div>
       {
-        !dataSource 
-        ? <div className="progress-card">
-            <LoadingOutlined className="big-icon" />
-            <div className="progress-card-message">
-              <label>{t('deployer.retrievingEstimates')}</label>
-              <span>{t('deployer.retrievingEstimatesInfo')}</span>
-            </div>
-          </div>
+        (!dataSource || !estimate)
+        ? <ProgressCard 
+            loading={loading || !dataSource || !estimate}
+            title={loading ? t('loadingEndpointSettings') : t('deployer.retrievingEstimates')}
+            subtitle={t('deployer.retrievingEstimatesInfo')}
+          />
         : <Table className="estimates" columns={columns} dataSource={dataSource} pagination={false} showHeader={false} bordered size="small" />
       }
     </div>

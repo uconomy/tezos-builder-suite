@@ -1,1 +1,1 @@
-export * from './PreviewDeploy';
+export * from './PreviewDeployPage';

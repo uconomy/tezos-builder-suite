@@ -3,6 +3,7 @@ import { FormInstance  } from 'antd';
 import { Contract } from '../../graphql/contract';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { TezosToolkit } from '@taquito/taquito';
+import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
 
 export type DeployerState = {
   contract?: Contract;
@@ -12,6 +13,7 @@ export type DeployerState = {
   signer?: string;
   Tezos?: TezosToolkit;
   wallet?: BeaconWallet;
+  estimates?: Estimate;
 };
 
 const deplyInitialState = {
@@ -22,6 +24,7 @@ const deplyInitialState = {
   signer: undefined,
   Tezos: undefined,
   wallet: undefined,
+  estimates: undefined,
 };
 
 const { useGlobalState } = createGlobalState<DeployerState>(deplyInitialState);

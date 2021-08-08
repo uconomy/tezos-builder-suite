@@ -18,6 +18,7 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
   const [, setActiveForm] = useDeployState('activeForm');
   const [, setInitialStorage] = useDeployState('initialStorage');
   const [storageContent, setStorageContent] = useDeployState('storageContent');
+  const [, setEstimates] = useDeployState('estimates');
 
   useEffect(() => {
     setActiveForm(storageForm);
@@ -28,7 +29,6 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
   }, [storageForm, setActiveForm]);
 
   const handleFinish = useCallback((formValues: any) => {
-    console.log('FORM FINISH', JSON.stringify(formValues, null, 2));
     if (!contract) {
       return;
     }
@@ -36,6 +36,7 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
     const importer = new StorageImporter(contract.michelson);
 
     setStorageContent(formValues);
+    setEstimates(undefined);
 
     const storage = importer.fromJSON(formValues);
 

@@ -48,5 +48,13 @@
     "totalCost": "Total Cost"
   },
   "retrievingEstimates": "Retrieving estimates...",
-  "retrievingEstimatesInfo": "Results will be present in a few."
+  "retrievingEstimatesInfo": "Results will be present in a few.",
+  "aknowledgeEstimates": "Aknowledge Estimates",
+  "networkWarning": "You are going to deploy on MainNet!",
+  "networkEndpoint": "Your are going to use endpoint: {{endpoint}}",
+  "chooseSigner": "Choose origination signer",
+  "signerWarning": "{{signer}} will sign and pay for the origination",
+  "signerWarningInfo": "Once you start deploying the contract, the action won't be cancelable nor undoable.",
+  "changeSigner": "Change operation signer",
+  "deploy": "Deploy Contract \"{{name}}\"!"
 }

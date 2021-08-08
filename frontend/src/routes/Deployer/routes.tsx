@@ -4,6 +4,7 @@ import { RouteDefinition } from '../routes.types';
 import { CheckContractPage } from './CheckContractPage';
 import { PrepareStoragePage } from './PrepareStoragePage';
 import { PreviewDeployPage } from './PreviewDeployPage';
+import { DeployPage } from './DeployPage';
 
 export const deployerRoutes: RouteDefinition[] = [
   {
@@ -24,6 +25,11 @@ export const deployerRoutes: RouteDefinition[] = [
   {
     path: "preview",
     component: () => <PreviewDeployPage />,
+    exact: true,
+  },
+  {
+    path: "deploy",
+    component: () => <DeployPage />,
     exact: true,
   }
 ];

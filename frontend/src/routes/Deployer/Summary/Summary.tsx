@@ -1,6 +1,6 @@
 import { Steps, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { AimOutlined, SaveOutlined } from '@ant-design/icons';
+import { AimOutlined, SaveOutlined, CheckOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import "./Summary.css";
@@ -19,7 +19,7 @@ const orderedSteps = [
 export const Summary: React.FC = () => {
   const [contract] = useDeployState('contract');
   const [activeForm] = useDeployState('activeForm');
-
+  const [estimates] = useDeployState('estimates');
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -41,6 +41,18 @@ export const Summary: React.FC = () => {
     </Button>
   );
 
+  const renderAknowledgeEstimatesButton = () => (
+    <Button 
+      type="primary" 
+      className="summary-spacer" 
+      icon={<CheckOutlined />}
+      disabled={!estimates}
+      onClick={() => history.push('deploy')}
+    >
+      {t(`deployer.aknowledgeEstimates`)}
+    </Button>
+  );
+
   const step = orderedSteps.findIndex(x => history.location.pathname.endsWith(x)) || 0;
 
   return (
@@ -48,7 +60,7 @@ export const Summary: React.FC = () => {
       <Step title={t(`deployer.steps.selectContract`)} description={contract && contract.name} />
       <Step title={t(`deployer.steps.checkContract`)} description={step === 1 && renderConfirmContractButton()} />
       <Step title={t(`deployer.steps.prepareStorage`)} description={step === 2 && renderVerifyStorageButton()} />
-      <Step title={t(`deployer.steps.preview`)} />
+      <Step title={t(`deployer.steps.preview`)} description={step === 3 && renderAknowledgeEstimatesButton()} />
       <Step title={t(`deployer.steps.deploy`)}  />
     </Steps>
   );
