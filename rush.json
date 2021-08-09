@@ -390,11 +390,11 @@
    */
   "projects": [
     {
-      "packageName": "frontend",
+      "packageName": "tezos-beacon-remote-frontend",
       "projectFolder": "frontend"
     },
     {
-      "packageName": "backend",
+      "packageName": "tezos-beacon-remote",
       "projectFolder": "backend"
     }
     // {
