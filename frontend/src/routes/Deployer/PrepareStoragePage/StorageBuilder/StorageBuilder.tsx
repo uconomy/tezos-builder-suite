@@ -29,6 +29,8 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
   }, [storageForm, setActiveForm]);
 
   const handleFinish = useCallback((formValues: any) => {
+    console.log('FORM FINISH', JSON.stringify(formValues, null, 2));
+
     if (!contract) {
       return;
     }
@@ -43,7 +45,7 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
     console.log('GENERATED STORAGE', storage);
 
     setInitialStorage(storage);
-  }, [setInitialStorage]);
+  }, [contract, setStorageContent, setEstimates, setInitialStorage]);
 
   return (
     <Form 

@@ -1,112 +1,84 @@
-import { UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import React, { useCallback } from 'react';
+import { CloudServerOutlined, CloudUploadOutlined, ContainerOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/client';
-import { BeaconWallet } from '@taquito/beacon-wallet';
-import { TezosToolkit } from '@taquito/taquito';
 import { Button } from 'antd';
-import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
 import { ProgressCard } from '../../../../../shared/ProgressCard';
 import { useDeployState } from '../../../state';
-import "./DeployManager.css";
 
+import "./DeployManager.css";
+import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
 
 export const DeployManager: React.FC = () => {
   const { t } = useTranslation();
 
-  const { data, loading, error } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
+  const { data } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
 
-  const [Tezos, setTezosToolkit] = useDeployState('Tezos');
-  const [wallet, setWallet] = useDeployState('wallet');
-  const [signer, setSigner] = useDeployState('signer');
+  const [Tezos] = useDeployState('Tezos');
+  const [signer] = useDeployState('signer');
+  const [contract] = useDeployState('contract');
+  const [initialStorage] = useDeployState('initialStorage');
 
-  useEffect(() => {
-    if (Tezos) {
+  const [opHash, setOperationHash] = useDeployState('operationHash');
+  const [contractAddress, setContractAddress] = useDeployState('contractAddress');
+
+  const handleDeployContract = useCallback(async () => {
+    if (!Tezos || !signer || !contract || !initialStorage) {
       return;
     }
 
-    if (!data || loading || error) {
-      return;
-    }
-    
-    setTezosToolkit(new TezosToolkit(data.endpoint.url));
-  }, [Tezos, data, loading, error, setTezosToolkit]);
+    const op = await Tezos.wallet.originate({
+      code: JSON.parse(contract.michelson),
+      storage: initialStorage,
+    }).send();
 
-  useEffect(() => {
-    if (wallet) {
-      return;
-    }
+    const opHash = op.opHash;
+    setOperationHash(opHash);
 
-    if (!Tezos) {
-      return;
-    }
+    const deployedContract = await op.contract();
+    setContractAddress(deployedContract.address);
 
-    if (!data || loading || error) {
-      return;
-    }
-    
-    const w = new BeaconWallet({
-      name: t('deployer.signer.wallet.name'),
-      disclaimerText: t('deployer.signer.wallet.disclaimerText')
-    });
+    const receipt = await op.receipt();
+    console.log('RECEIPT', receipt);
+  }, [Tezos, signer, contract, initialStorage, setOperationHash, setContractAddress]);
 
-    setWallet(w);
-  }, [t, wallet, Tezos, data, loading, error, setWallet]);
-
-  const handleSetupSigner = useCallback(async () => {
-    if (!Tezos || !wallet || !data) {
-      return;
-    }
-
-    await wallet.requestPermissions({ network: { type: data.endpoint.protocolVersion } });
-
-    const address = await wallet.getPKH();
-    
-    // Tezos.setWalletProvider(wallet);
-    Tezos.setProvider({ wallet });
-
-    setSigner(address);
-  }, [Tezos, wallet, data, setSigner, setTezosToolkit]);
-
-  if (loading) {
-    return <>{t('loadingEndpointSettings')}</>;
-  }
-
-  if (error) {
-    return <>
-      <h1>{t('endpointSettingsError')}</h1>
-      <code>{JSON.stringify(error, null, 2)}</code>
-    </>;
-  }
+  const protocolVersion = data?.endpoint.protocolVersion;
 
   return (
-    <div className="signer-manager">
-      {!!signer &&
+    <div className="deploy-manager">
+      { opHash && 
         <ProgressCard
-          Icon={UserOutlined}
-          title={t('deployer.signerWarning', { signer })}
-          subtitle={t('deployer.signerWarningInfo')}
+          className={`operation-card${!contractAddress ? ' warning' : ''}`}
+          loading={!contractAddress}
+          Icon={CloudServerOutlined}
+          title={t('deployer.operationForged', { hash: opHash })}
+          subtitle={t(`deployer.operationForged${!contractAddress ? 'Warning' : 'Info'}`)}
         />
       }
 
-      <div className="call-to-action">
-        { !signer 
-          ? <Button 
+      { !contractAddress
+        ? <div className="call-to-action">
+            <Button 
               type="primary"
               size="large"
-              onClick={handleSetupSigner}
-              disabled={!!signer}
-              loading={loading || !!error || !Tezos}
-              icon={<UserOutlined />}
-            >{t('deployer.chooseSigner')}</Button>
-          : <Button 
-              type="default"
-              size="middle"
-              onClick={handleSetupSigner}
-              loading={loading || !!error || !Tezos}
-              icon={<UserSwitchOutlined />}
-            >{t('deployer.changeSigner')}</Button>
-        }
+              className="mega-button"
+              onClick={handleDeployContract}
+              disabled={!signer}
+              loading={!!opHash}
+              icon={<CloudUploadOutlined />}
+            >{t('deployer.deploy', { name: contract?.name })}</Button>
+          </div>
+        : <ProgressCard
+            className="contract-card"
+            Icon={ContainerOutlined}
+            title={t('deployer.contractDeployed', { address: contractAddress })}
+            subtitle={t('deployer.contractDeployedInfo')}
+          />
+    }
+
+      <div className="call-to-action">
+        { opHash && <a rel="noreferrer" href={`https://${protocolVersion !== 'mainnet' ? `${protocolVersion}.` : ''}tzkt.io/${opHash}`} target="_blank">View operation on tzkt.io</a> }
+        { contractAddress && <a rel="noreferrer" href={`https://better-call.dev/search?text=${contractAddress}`} target="_blank">View contract on better-call.dev</a> }
       </div>
     </div>
   );

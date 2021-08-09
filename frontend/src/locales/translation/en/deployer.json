@@ -4,7 +4,8 @@
     "selectContract": "Select a contract",
     "checkContract": "Verify contract \"{{name}}\" it's the right one",
     "prepareStorage": "Prepare initial contract Storage",
-    "preview": "Preview deploy operation and costs for \"{{name}}\""
+    "preview": "Preview deploy operation and costs for \"{{name}}\"",
+    "deploy": "Deploy contract \"{{name}}\""
   },
   "steps": {
     "selectContract": "Choose a contract",
@@ -22,7 +23,8 @@
     "jsonMichelson": "Storage structure",
     "contractCode": "Contract code",
     "storageContent": "Storage Content",
-    "preview": "Deploy preview"
+    "preview": "Deploy preview",
+    "deploy": "Deploy"
   },
   "verifyAndSaveStorage": "Verify and save",
   "previewOrigination": "Preview Origination",
@@ -56,5 +58,10 @@
   "signerWarning": "{{signer}} will sign and pay for the origination",
   "signerWarningInfo": "Once you start deploying the contract, the action won't be cancelable nor undoable.",
   "changeSigner": "Change operation signer",
-  "deploy": "Deploy Contract \"{{name}}\"!"
+  "deploy": "Deploy Contract \"{{name}}\"!",
+  "operationForged": "Operation {{hash}} was forged",
+  "operationForgedWarning": "Please don't close/refresh the page as the contract is being originated!",
+  "operationForgedInfo": "Block was included and processed successfully",
+  "contractDeployed": "Contract deployed at {{address}}",
+  "contractDeployedInfo": "You can now start interacting with it!"
 }

@@ -19,6 +19,7 @@ export const SignerManager: React.FC = () => {
   const [Tezos, setTezosToolkit] = useDeployState('Tezos');
   const [wallet, setWallet] = useDeployState('wallet');
   const [signer, setSigner] = useDeployState('signer');
+  const [opHash] = useDeployState('operationHash');
 
   useEffect(() => {
     if (Tezos) {
@@ -66,7 +67,7 @@ export const SignerManager: React.FC = () => {
     Tezos.setProvider({ wallet });
 
     setSigner(address);
-  }, [Tezos, wallet, data, setSigner, setTezosToolkit]);
+  }, [Tezos, wallet, data, setSigner]);
 
   if (loading) {
     return <>{t('loadingEndpointSettings')}</>;
@@ -89,6 +90,7 @@ export const SignerManager: React.FC = () => {
         />
       }
 
+      { !opHash &&
       <div className="call-to-action">
         { !signer 
           ? <Button 
@@ -108,6 +110,7 @@ export const SignerManager: React.FC = () => {
             >{t('deployer.changeSigner')}</Button>
         }
       </div>
+      }
     </div>
   );
 }

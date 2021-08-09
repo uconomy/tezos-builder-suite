@@ -24,7 +24,7 @@ export class StorageImporter {
     // Fill the list/set
     el.forEach((item, index) => {
       // Parse eventual sub-structures
-      const value = this.fromJSON(item, structure.value);
+      const value = this.fromJSON(item, structure.value, false);
 
       map.set(index, value);
     });
@@ -45,7 +45,7 @@ export class StorageImporter {
     // Fill the map/big_map
     el.forEach((item) => {
       // Parse eventual sub-structures
-      let iValue = this.fromJSON(item[1], structure.value);
+      let iValue = this.fromJSON(item[1], structure.value, false);
 
       map.set(item[0], iValue);
     });
@@ -87,7 +87,7 @@ export class StorageImporter {
     }
   }
 
-  fromJSON(json: any, structure: UnwrappedMichelsonObject[] = this.unwrappedStorage) {
+  fromJSON(json: any, structure: UnwrappedMichelsonObject[] = this.unwrappedStorage, isFirstLevel: boolean = true) {
     const storage: any = {};
 
     if (Array.isArray(json) || typeof json === 'object') {
@@ -109,6 +109,15 @@ export class StorageImporter {
       });
     } else {
       return this._parse(json, structure[0]);
+    }
+
+    if (isFirstLevel && typeof storage === 'object') {
+      const keys = Object.keys(storage);
+
+      // If we have a single-value storage, IT IS the storage (eg. example LIGO counter)
+      if (keys.length === 1 && keys[0] === '0') {
+        return storage[0];
+      }
     }
 
     return storage;

@@ -17,15 +17,16 @@
 }
 
 .estimate-tez {
+  text-align: right;
   font-weight: bold;
   color: #2980b9;
+  justify-content: flex-end;
 }
 
 .totalCost {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
   height: 40px;
   font-size: 1.25em;
   font-weight: bold;

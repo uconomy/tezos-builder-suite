@@ -1,14 +1,13 @@
-import React, { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Layout, PageHeader, Tabs } from 'antd';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback } from "react";
 
-import "./DeployPage.css";
+import { Layout, PageHeader, Tabs } from 'antd';
+import { useTranslation } from "react-i18next";
+import { useHistory } from 'react-router-dom';
 import { CodeViewer } from "../../../shared/CodeViewer";
 import { useDeployState } from "../state";
-import { Endpoint, GET_ENDPOINT } from "../../../graphql/endpoint";
-import { useQuery } from "@apollo/client";
 import { DeployConsole } from "./DeployConsole";
+
+import "./DeployPage.css";
 
 const {
   Header,
@@ -25,9 +24,6 @@ export const DeployPage: React.FC = () => {
 
   const [contract] = useDeployState('contract');
   const [storageContent] = useDeployState('storageContent');
-  const [initialStorage] = useDeployState('initialStorage');
-
-  const { data, loading, error } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
 
   const goBack = useCallback(() => {
     history.push('preview');
@@ -38,26 +34,15 @@ export const DeployPage: React.FC = () => {
 
     return null;
   }
-
-  if (loading) {
-    return <>{t('loadingEndpointSettings')}</>;
-  }
-
-  if (error) {
-    return <>
-      <h1>{t('endpointSettingsError')}</h1>
-      <code>{JSON.stringify(error, null, 2)}</code>
-    </>;
-  }
   
   return (
     <Layout>
       <Header className="page-header">
-        <PageHeader title={t(`deployer.titles.preview`, { name: contract.name })} onBack={goBack} />
+        <PageHeader title={t(`deployer.titles.deploy`, { name: contract.name })} onBack={goBack} />
       </Header>
       <Content className="page-content">
         <Tabs defaultActiveKey="1" className="page-tabs">
-          <TabPane tab={t('deployer.storage.preview')} key="1">
+          <TabPane tab={t('deployer.storage.deploy')} key="1">
             <DeployConsole />
           </TabPane>
           <TabPane tab={t('deployer.storage.storageContent')} key="2">

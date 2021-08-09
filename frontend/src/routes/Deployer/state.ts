@@ -14,9 +14,11 @@ export type DeployerState = {
   Tezos?: TezosToolkit;
   wallet?: BeaconWallet;
   estimates?: Estimate;
+  operationHash?: string;
+  contractAddress?: string;
 };
 
-const deplyInitialState = {
+const deplyInitialState: DeployerState = {
   contract: undefined,
   activeForm: undefined,
   initialStorage: undefined,
@@ -25,6 +27,8 @@ const deplyInitialState = {
   Tezos: undefined,
   wallet: undefined,
   estimates: undefined,
+  operationHash: undefined,
+  contractAddress: undefined
 };
 
 const { useGlobalState } = createGlobalState<DeployerState>(deplyInitialState);

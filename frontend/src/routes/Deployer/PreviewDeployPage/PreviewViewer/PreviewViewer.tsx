@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Table } from 'antd';
-import { WarningOutlined } from '@ant-design/icons';
+import { Table, Button } from 'antd';
+import { WarningOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/client';
 
 import "./PreviewViewer.css";
@@ -24,12 +24,12 @@ const types: { [x: string]: ResultLine['type'] } = {
   "minimalFeeMutez": 'mutez',
   "suggestedFeeMutez": 'mutez',
   "operationFeeMutez": 'mutez',
-  "burnFeeMutez": 'mutez',
   "gasLimit": `number`,
   "consumedMilligas": 'number',
   "storageLimit": 'bytes',
   "opSize": 'bytes',
   "minimalFeePerStorageByteMutez": 'mutez',
+  "burnFeeMutez": 'mutez',
   "totalCost": 'mutez',
 }
 
@@ -43,12 +43,14 @@ export const PreviewViewer: React.FC = () => {
   const [estimate, setEstimates] = useDeployState('estimates');
 
   const [dataSource, setDataSource] = useState<Results>();
-  const [previewError, throwPreviewError] = useState<Error>();
+  const [previewError, setPreviewError] = useState<Error>();
 
   const handlePreviewRequest = useCallback(async () => {
     if (!contract || !initialStorage || !data || loading || error) {
       return;
     }
+
+    setPreviewError(undefined);
 
     const LocalTezos = new TezosToolkit(data.endpoint.url);
 
@@ -90,9 +92,9 @@ export const PreviewViewer: React.FC = () => {
 
       setEstimates(op);
     } catch(err) {
-      throwPreviewError(err);
+      setPreviewError(err);
     }
-  }, [contract, initialStorage, data, loading, error]);
+  }, [contract, initialStorage, data, loading, error, setEstimates, setPreviewError]);
 
   useEffect(() => {
     if (!contract || !initialStorage || !data || loading || error) {
@@ -126,7 +128,7 @@ export const PreviewViewer: React.FC = () => {
       });
 
     setDataSource(estimatesData);
-  }, [estimate, contract, initialStorage, data, loading, error]);
+  }, [estimate, contract, initialStorage, data, loading, error, handlePreviewRequest]);
 
   const columns = [
     {
@@ -148,11 +150,16 @@ export const PreviewViewer: React.FC = () => {
 
   if (error || previewError) {
     return (
-      <ProgressCard 
-        Icon={WarningOutlined}
-        title={error ? t('endpointSettingsError') : previewError?.message || ''}
-        subtitle={error ? error.message : previewError?.stack || ''}
-      />
+      <>
+        <ProgressCard 
+          Icon={WarningOutlined}
+          title={error ? t('endpointSettingsError') : previewError?.message || ''}
+          subtitle={error ? error.message : previewError?.stack || ''}
+        />
+        <div className="call-to-action">
+          <Button onClick={handlePreviewRequest} type="primary" icon={<ReloadOutlined />}>{t('tryAgain')}</Button>
+        </div>
+      </>
     );
   }
 
