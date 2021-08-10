@@ -1,8 +1,6 @@
 import express from 'express';
 import serveStatic from 'serve-static';
 import open from 'open';
-import { Contract } from './domain/contract';
-import { Endpoint, NetworkType } from './domain/endpoint';
 import { createApolloServer, schema } from './graphql';
 import { TezosBeaconRemoteContext, TezosBeaconRemoteOptions } from './types';
 
@@ -36,7 +34,7 @@ export async function launch(context: TezosBeaconRemoteContext, options?: Partia
   }));
 
   // Serve frontend bundle
-  app.use(serveStatic('../frontend/build'));
+  app.use(serveStatic('./frontend'));
 
   // Server startup
   await new Promise<void>(resolve => app.listen({ port: port }, () => resolve()));

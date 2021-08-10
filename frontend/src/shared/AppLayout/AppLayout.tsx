@@ -1,6 +1,5 @@
 import { Layout, Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { History } from 'history';
 import React from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -22,7 +21,7 @@ const getDefaultOpenedKeys = (items: MenuItem[]) => {
   return items.filter(x => !!x.children).map(x => x.route.path);
 }
 
-const renderMenuItem = (item: MenuItem, index: number, root: string, history: History, t: TFunction) => {
+const renderMenuItem = (item: MenuItem, index: number, root: string, history: any, t: TFunction) => {
   if (item.children) {
     return (
       <SubMenu
