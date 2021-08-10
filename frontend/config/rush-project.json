@@ -19,7 +19,7 @@
    * They must not contain symlinks.
    */
   "projectOutputFolderNames": [
-    "build"
+    // "build"
   ],
 
   /**
