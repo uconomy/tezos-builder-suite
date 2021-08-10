@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Layout, PageHeader } from 'antd';
 import { useQuery } from '@apollo/client';
@@ -19,12 +19,16 @@ export const ChooseContractPage: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const [, setContract] = useDeployState('contract');
+  const [selectedContract, setContract] = useDeployState('contract');
+  const [isComingBack, setIsComingBack] = useState<boolean>(true);
 
   const { data, loading, error } = useQuery<{ contracts: Contract[] }>(GET_CONTRACTS);
 
   useEffect(() => {
+    setIsComingBack(!!selectedContract);
+
     setContract(undefined);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setContract]);
 
   const selectContract = useCallback((contract: Contract) => {
@@ -32,6 +36,21 @@ export const ChooseContractPage: React.FC = () => {
 
     history.push(deployerRoutes[1].path);
   }, [setContract, history]);
+
+  useEffect(() => {
+    if (isComingBack) {
+      return;
+    }
+
+    if (!data || !data.contracts || !data.contracts.length || data.contracts.length > 1) {
+      return;
+    }
+
+    // Yeah, this if is unuseful, but it makes the code much more readable
+    if (data.contracts.length === 1) {
+      selectContract(data.contracts[0]);
+    }
+  }, [isComingBack, data, loading, error, selectContract]);
 
   if (loading) {
     return (
