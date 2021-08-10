@@ -329,7 +329,9 @@
     /**
      * The list of shell commands to run after the Rush build command finishes
      */
-    "postRushBuild": []
+    "postRushBuild": [
+      "node ./scripts/pack-frontend.js"
+    ]
   },
 
   /**
@@ -391,11 +393,13 @@
   "projects": [
     {
       "packageName": "tezos-beacon-remote-frontend",
-      "projectFolder": "frontend"
+      "projectFolder": "frontend",
+      "publishFolder": "build"
     },
     {
       "packageName": "tezos-beacon-remote",
-      "projectFolder": "backend"
+      "projectFolder": "backend",
+      "shouldPublish": true
     }
     // {
     //   /**
