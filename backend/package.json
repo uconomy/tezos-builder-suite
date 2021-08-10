@@ -1,7 +1,7 @@
 {
   "name": "tezos-beacon-remote",
   "version": "0.1.0",
-  "description": "",
+  "description": "All-in-one library to work with Beacon SDK within Node.js",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -12,7 +12,7 @@
     "test:e2e": "jest --testMatch='**/__tests__/**/*.e2e.ts?(x)' --globalSetup='<rootDir>/globalSetup.ts' --passWithNoTests --runInBand"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
