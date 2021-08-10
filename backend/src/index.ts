@@ -3,10 +3,16 @@ import serveStatic from 'serve-static';
 import open from 'open';
 import { createApolloServer, schema } from './graphql';
 import { TezosBeaconRemoteContext, TezosBeaconRemoteOptions } from './types';
+import { NetworkType } from './domain/endpoint';
+import { Contract } from "./domain/contract";
+import { Endpoint } from "./domain/endpoint";
 
 export type {
   TezosBeaconRemoteOptions,
-  TezosBeaconRemoteContext
+  TezosBeaconRemoteContext,
+  NetworkType,
+  Contract,
+  Endpoint,
 };
 
 const defaultOptions: TezosBeaconRemoteOptions = {
@@ -14,7 +20,7 @@ const defaultOptions: TezosBeaconRemoteOptions = {
   openBrowser: true,
 };
 
-export async function launch(context: TezosBeaconRemoteContext, options?: Partial<TezosBeaconRemoteOptions>) {
+export async function launchTezosBeaconRemote(context: TezosBeaconRemoteContext, options?: Partial<TezosBeaconRemoteOptions>) {
   const {
     port,
     openBrowser,

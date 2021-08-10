@@ -1,5 +1,6 @@
-import { launch } from ".";
-import { NetworkType } from "./domain/endpoint";
+import { launchTezosBeaconRemote } from ".";
+import { Contract } from "./domain/contract";
+import { Endpoint, NetworkType } from "./domain/endpoint";
 
 const COUNTER_MICHELSON = "[ { \"prim\": \"parameter\",\n    \"args\":\n      [ { \"prim\": \"or\",\n          \"args\":\n            [ { \"prim\": \"or\",\n                \"args\":\n                  [ { \"prim\": \"int\", \"annots\": [ \"%decrement\" ] },\n                    { \"prim\": \"int\", \"annots\": [ \"%increment\" ] } ] },\n              { \"prim\": \"unit\", \"annots\": [ \"%reset\" ] } ] } ] },\n  { \"prim\": \"storage\", \"args\": [ { \"prim\": \"int\" } ] },\n  { \"prim\": \"code\",\n    \"args\":\n      [ [ { \"prim\": \"UNPAIR\" },\n          { \"prim\": \"IF_LEFT\",\n            \"args\":\n              [ [ { \"prim\": \"IF_LEFT\",\n                    \"args\":\n                      [ [ { \"prim\": \"SWAP\" }, { \"prim\": \"SUB\" } ],\n                        [ { \"prim\": \"ADD\" } ] ] } ],\n                [ { \"prim\": \"DROP\", \"args\": [ { \"int\": \"2\" } ] },\n                  { \"prim\": \"PUSH\",\n                    \"args\": [ { \"prim\": \"int\" }, { \"int\": \"0\" } ] } ] ] },\n          { \"prim\": \"NIL\", \"args\": [ { \"prim\": \"operation\" } ] },\n          { \"prim\": \"PAIR\" } ] ] } ]\n\n";
 
@@ -116,12 +117,12 @@ let main = ([action, store] : [parameter, storage]) : return_ => {
 };
 `;
 
-const endpoint = {
+const endpoint: Endpoint = {
   url: "https://testnet-tezos.giganode.io/",
   protocolVersion: NetworkType.FLORENCENET,
 };
 
-const contracts = [
+const contracts: Contract[] = [
   {
     name: "My PascaLIGO Contract.ligo",
     code: PASCALIGO_EXAMPLE,
@@ -144,7 +145,7 @@ const contracts = [
   },
 ];
 
-launch({ 
+launchTezosBeaconRemote({ 
   endpoint,
   contracts
 }, { openBrowser: false });
