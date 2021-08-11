@@ -48,8 +48,8 @@ export async function launchDeployer(context: TezosBuilderSuiteContext, options?
   await new Promise<void>(resolve => app.listen({ port: port }, () => resolve()));
 
   if (openBrowser) {
-    await open(`http://localhost:${port}/deployer`);
+    await open(`http://localhost:${port}`);
   }
 
-  console.log(`🚀  Tezos Beacon Remote is locally available at http://localhost:${port}/`);
+  console.log(`🚀  Tezos Builder Suite is locally available at http://localhost:${port}/`);
 }
