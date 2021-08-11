@@ -29,7 +29,7 @@ If you want to include this package in your toolchain, please refer to the actua
 ## Roadmap
 - Testing complex storage scenarios and make sure every use case is covered properly
 - Support configuration for estimates calculation (endpoint + faucet are now hardcoded)
-- Include callbacks to Node.js library to receive storage content files and deploy data
+- Include callbacks to Node.js library to receive storage content files
 - Support multiple Tezos network endpoints and let the user choose where to deploy
 - Add other features other than the Deployer
 

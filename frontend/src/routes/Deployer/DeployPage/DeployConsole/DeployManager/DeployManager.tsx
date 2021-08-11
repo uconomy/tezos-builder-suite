@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { CloudServerOutlined, CloudUploadOutlined, ContainerOutlined } from '@ant-design/icons';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { ProgressCard } from '../../../../../shared/ProgressCard';
@@ -8,11 +8,13 @@ import { useDeployState } from '../../../state';
 
 import "./DeployManager.css";
 import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
+import { Contract, CONTRACT_DEPLOY_COMPLETED } from '../../../../../graphql/contract';
 
 export const DeployManager: React.FC = () => {
   const { t } = useTranslation();
 
   const { data } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
+  const [onDeployCompleted] = useMutation<{ contract: Contract; address: string; }>(CONTRACT_DEPLOY_COMPLETED);
 
   const [Tezos] = useDeployState('Tezos');
   const [signer] = useDeployState('signer');
@@ -40,7 +42,18 @@ export const DeployManager: React.FC = () => {
 
     const receipt = await op.receipt();
     console.log('RECEIPT', receipt);
-  }, [Tezos, signer, contract, initialStorage, setOperationHash, setContractAddress]);
+
+    await onDeployCompleted({
+      variables: {
+        contract: {
+          name: contract.name,
+          code: contract.code,
+          michelson: contract.michelson
+        },
+        address: deployedContract.address,
+      }
+    });
+  }, [Tezos, signer, contract, initialStorage, setOperationHash, setContractAddress, onDeployCompleted]);
 
   const protocolVersion = data?.endpoint.protocolVersion;
 

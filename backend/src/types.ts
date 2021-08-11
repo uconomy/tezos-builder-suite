@@ -9,4 +9,5 @@ export type TezosBuilderSuiteOptions = {
 export type TezosBuilderSuiteContext = {
   contracts: Contract[];
   endpoint: Endpoint;
+  onDeployCompleted?: (contract: Contract, address: string) => void;
 };

@@ -1,6 +1,7 @@
 import { launchDeployer } from ".";
 import { Contract } from "./domain/contract";
 import { Endpoint, NetworkType } from "./domain/endpoint";
+import contract from "./graphql/contract";
 
 const COUNTER_MICHELSON = "[ { \"prim\": \"parameter\",\n    \"args\":\n      [ { \"prim\": \"or\",\n          \"args\":\n            [ { \"prim\": \"or\",\n                \"args\":\n                  [ { \"prim\": \"int\", \"annots\": [ \"%decrement\" ] },\n                    { \"prim\": \"int\", \"annots\": [ \"%increment\" ] } ] },\n              { \"prim\": \"unit\", \"annots\": [ \"%reset\" ] } ] } ] },\n  { \"prim\": \"storage\", \"args\": [ { \"prim\": \"int\" } ] },\n  { \"prim\": \"code\",\n    \"args\":\n      [ [ { \"prim\": \"UNPAIR\" },\n          { \"prim\": \"IF_LEFT\",\n            \"args\":\n              [ [ { \"prim\": \"IF_LEFT\",\n                    \"args\":\n                      [ [ { \"prim\": \"SWAP\" }, { \"prim\": \"SUB\" } ],\n                        [ { \"prim\": \"ADD\" } ] ] } ],\n                [ { \"prim\": \"DROP\", \"args\": [ { \"int\": \"2\" } ] },\n                  { \"prim\": \"PUSH\",\n                    \"args\": [ { \"prim\": \"int\" }, { \"int\": \"0\" } ] } ] ] },\n          { \"prim\": \"NIL\", \"args\": [ { \"prim\": \"operation\" } ] },\n          { \"prim\": \"PAIR\" } ] ] } ]\n\n";
 
@@ -156,5 +157,9 @@ const contracts: Contract[] = [
 
 launchDeployer({ 
   endpoint,
-  contracts
+  contracts,
+  onDeployCompleted: (_, address) => {
+    console.log('Deployed contract at', address);
+    process.exit(0);
+  }
 }, { openBrowser: false });

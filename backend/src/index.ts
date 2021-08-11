@@ -31,6 +31,7 @@ export async function launchDeployer(context: TezosBuilderSuiteContext, options?
   const {
     endpoint,
     contracts,
+    onDeployCompleted,
   } = context;
 
   const app = express();
@@ -38,7 +39,8 @@ export async function launchDeployer(context: TezosBuilderSuiteContext, options?
   // Instance Graphql server
   const server = await createApolloServer(app, schema, () => ({
     endpoint,
-    contracts
+    contracts,
+    onDeployCompleted,
   }));
 
   // Serve frontend bundle
@@ -48,7 +50,7 @@ export async function launchDeployer(context: TezosBuilderSuiteContext, options?
   await new Promise<void>(resolve => app.listen({ port: port }, () => resolve()));
 
   if (openBrowser) {
-    await open(`http://localhost:${port}`);
+    await open(`http://localhost:${port}/`);
   }
 
   console.log(`🚀  Tezos Builder Suite is locally available at http://localhost:${port}/`);
