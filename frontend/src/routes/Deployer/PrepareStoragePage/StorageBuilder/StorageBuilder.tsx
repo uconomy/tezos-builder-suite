@@ -64,7 +64,7 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
 
       console.log("STORAGE FAILED", err);
     }
-  }, [contract, setStorageContent, setEstimates, setInitialStorage]);
+  }, [contract, setStorageContent, setEstimates, setInitialStorage, onFinish]);
 
   return (
     <>
