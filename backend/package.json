@@ -1,5 +1,5 @@
 {
-  "name": "tezos-beacon-remote",
+  "name": "tezos-builder-suite",
   "version": "0.1.0",
   "description": "All-in-one library to work with Beacon SDK within Node.js",
   "main": "build/index.js",

@@ -3,30 +3,30 @@ import serveStatic from 'serve-static';
 import open from 'open';
 import path from 'path';
 import { createApolloServer, schema } from './graphql';
-import { TezosBeaconRemoteContext, TezosBeaconRemoteOptions } from './types';
+import { TezosBuilderSuiteContext, TezosBuilderSuiteOptions } from './types';
 import { NetworkScope, NetworkType } from './domain/endpoint';
 import { Contract } from "./domain/contract";
 import { Endpoint } from "./domain/endpoint";
 
 export {
-  TezosBeaconRemoteOptions,
-  TezosBeaconRemoteContext,
+  TezosBuilderSuiteOptions,
+  TezosBuilderSuiteContext,
   NetworkScope,
   NetworkType,
   Contract,
   Endpoint,
 };
 
-const defaultOptions: TezosBeaconRemoteOptions = {
+const defaultOptions: TezosBuilderSuiteOptions = {
   port: 4000,
   openBrowser: true,
 };
 
-export async function launchTezosBeaconRemote(context: TezosBeaconRemoteContext, options?: Partial<TezosBeaconRemoteOptions>) {
+export async function launchDeployer(context: TezosBuilderSuiteContext, options?: Partial<TezosBuilderSuiteOptions>) {
   const {
     port,
     openBrowser,
-  }: TezosBeaconRemoteOptions = Object.assign({}, defaultOptions, options);
+  }: TezosBuilderSuiteOptions = Object.assign({}, defaultOptions, options);
 
   const {
     endpoint,
@@ -48,7 +48,7 @@ export async function launchTezosBeaconRemote(context: TezosBeaconRemoteContext,
   await new Promise<void>(resolve => app.listen({ port: port }, () => resolve()));
 
   if (openBrowser) {
-    await open(`http://localhost:${port}`);
+    await open(`http://localhost:${port}/deployer`);
   }
 
   console.log(`🚀  Tezos Beacon Remote is locally available at http://localhost:${port}/`);

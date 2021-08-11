@@ -28,13 +28,13 @@
   },
   "verifyAndSaveStorage": "Verify and save",
   "storageValidationError": "{{name}} while validating generated storage",
-  "storageValidationErrorInfo": "Please report this at https://github.com/uconomy/tezos-beacon-remote",
+  "storageValidationErrorInfo": "Please report this at https://github.com/uconomy/tezos-builder-suite",
   "previewOrigination": "Preview Origination",
   "signer": {
     "loadingEndpointSettings": "Loading Tezos endpoint settings...",
     "endpointSettingsError": "Failed to retrieve Tezos endpoint settings",
     "wallet": {
-      "name": "Tezos Beacon Remote",
+      "name": "Tezos Builder Suite",
       "disclaimerText": "This signer will be used only to perform actions activated by a specific user action."
     }
   },

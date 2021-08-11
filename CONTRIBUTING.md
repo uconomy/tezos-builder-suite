@@ -22,7 +22,7 @@ Before downloading the repo, you'll need both [Rush](https://rushjs.io/pages/dev
 
 To start local development, you need to clone this repository:
 ```bash
-git clone https://github.com/uconomy/tezos-beacon-remote.git && cd tezos-beacon-remote
+git clone https://github.com/uconomy/tezos-builder-suite.git && cd tezos-builder-suite
 ```
 
 Then you need to install the dependecies with:

@@ -290,7 +290,7 @@
      * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
      * to retrieve the latest activity for the remote master branch.
      */
-    "url": "https://github.com/uconomy/tezos-beacon-remote",
+    "url": "https://github.com/uconomy/tezos-builder-suite",
 
     /**
      * The default branch name. This tells "rush change" which remote branch to compare against.
@@ -392,12 +392,12 @@
    */
   "projects": [
     {
-      "packageName": "tezos-beacon-remote-frontend",
+      "packageName": "tezos-builder-suite-frontend",
       "projectFolder": "frontend",
       "publishFolder": "build"
     },
     {
-      "packageName": "tezos-beacon-remote",
+      "packageName": "tezos-builder-suite",
       "projectFolder": "backend",
       "shouldPublish": true
     }

@@ -1,12 +1,12 @@
 import { Contract } from "./domain/contract";
 import { Endpoint } from "./domain/endpoint";
 
-export type TezosBeaconRemoteOptions = {
+export type TezosBuilderSuiteOptions = {
   port: number;
   openBrowser: boolean;
 };
 
-export type TezosBeaconRemoteContext = {
+export type TezosBuilderSuiteContext = {
   contracts: Contract[];
   endpoint: Endpoint;
 };

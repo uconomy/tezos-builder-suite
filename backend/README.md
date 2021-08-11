@@ -1,25 +1,26 @@
 # A library to make use of Beacon SDK from your Node.js script
-`tezos-beacon-remote` is a package that exposes to your application an easy interface to let user interact with [Tezos](https://tezos.com) Smart Contracts with [Taquito](https://tezostaquito.io) and the [Beacon SDK](https://www.walletbeacon.io) through the infrastructure of a small [Apollo GraphQL server](https://www.apollographql.com) and a [React.js](https://reactjs.org) browser client.
+`tezos-builder-suite` is a package that exposes to your application an easy interface to let user interact with [Tezos](https://tezos.com) Smart Contracts with [Taquito](https://tezostaquito.io) and the [Beacon SDK](https://www.walletbeacon.io) through the infrastructure of a small [Apollo GraphQL server](https://www.apollographql.com) and a [React.js](https://reactjs.org) browser client.
 
 All you need to do is just launch the tool providing contract(s) code, contract(s) compiled Michelson and the Tezos endpoint to connect to.
 
 ## Installation
 ```bash
-yarn add tezos-beacon-remote
+yarn add tezos-builder-suite
 ```
 or
 ```bash
-npm i --save tezos-beacon-remote
+npm i --save tezos-builder-suite
 ```
 
 ## Usage
 In a JavaScript project, you can use:
 ```js
-const { launchTezosBeaconRemote, NetworkType } = require('tezos-beacon-remote');
+const { launchDeployer, NetworkType } = require('tezos-builder-suite');
 
 const endpoint = {
   url: "https://mainnet-tezos.giganode.io/",
-  protocolVersion: NetworkType.GRANADANET,
+  scope: "mainnet",
+  protocolVersion: NetworkType.MAINNET,
 };
 
 const contracts = [
@@ -30,7 +31,7 @@ const contracts = [
   },
 ];
 
-launchTezosBeaconRemote({ 
+launchDeployer({ 
   endpoint,
   contracts
 }, { openBrowser: true });
@@ -38,11 +39,12 @@ launchTezosBeaconRemote({
 
 or, if like us you prefer to write in TypeScript, you can go with:
 ```typescript
-import { launchTezosBeaconRemote, Contract, Endpoint, NetworkType } from 'tezos-beacon-remote';
+import { launchDeployer, Contract, Endpoint, NetworkType } from 'tezos-builder-suite';
 
 const endpoint: Endpoint = {
   url: "https://mainnet-tezos.giganode.io/",
-  protocolVersion: NetworkType.GRANADANET,
+  scope: "mainnet",
+  protocolVersion: NetworkType.MAINNET,
 };
 
 const contracts: Contract[] = [
@@ -53,7 +55,7 @@ const contracts: Contract[] = [
   },
 ];
 
-launchTezosBeaconRemote({ 
+launchDeployer({ 
   endpoint,
   contracts
 }, { openBrowser: true });
