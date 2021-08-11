@@ -119,7 +119,8 @@ let main = ([action, store] : [parameter, storage]) : return_ => {
 
 const endpoint: Endpoint = {
   url: "https://testnet-tezos.giganode.io/",
-  protocolVersion: NetworkType.FLORENCENET,
+  scope: 'testnet',
+  protocolVersion: NetworkType.FLORENCENET
 };
 
 const contracts: Contract[] = [

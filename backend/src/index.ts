@@ -4,13 +4,14 @@ import open from 'open';
 import path from 'path';
 import { createApolloServer, schema } from './graphql';
 import { TezosBeaconRemoteContext, TezosBeaconRemoteOptions } from './types';
-import { NetworkType } from './domain/endpoint';
+import { NetworkScope, NetworkType } from './domain/endpoint';
 import { Contract } from "./domain/contract";
 import { Endpoint } from "./domain/endpoint";
 
 export {
   TezosBeaconRemoteOptions,
   TezosBeaconRemoteContext,
+  NetworkScope,
   NetworkType,
   Contract,
   Endpoint,

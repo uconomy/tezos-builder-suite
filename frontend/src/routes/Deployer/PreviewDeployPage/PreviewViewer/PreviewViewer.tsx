@@ -52,7 +52,7 @@ export const PreviewViewer: React.FC = () => {
 
     setPreviewError(undefined);
 
-    const LocalTezos = new TezosToolkit(data.endpoint.url);
+    const LocalTezos = new TezosToolkit("https://testnet-tezos.giganode.io/");
 
     const faucet = {
       "mnemonic": [
@@ -153,7 +153,7 @@ export const PreviewViewer: React.FC = () => {
       <>
         <ProgressCard 
           Icon={WarningOutlined}
-          title={error ? t('endpointSettingsError') : previewError?.message || ''}
+          title={error ? t('deployer.signer.endpointSettingsError') : previewError?.message || ''}
           subtitle={error ? error.message : previewError?.stack || ''}
         />
         <div className="call-to-action">
@@ -169,7 +169,7 @@ export const PreviewViewer: React.FC = () => {
         (!dataSource || !estimate)
         ? <ProgressCard 
             loading={loading || !dataSource || !estimate}
-            title={loading ? t('loadingEndpointSettings') : t('deployer.retrievingEstimates')}
+            title={loading ? t('deployer.signer.loadingEndpointSettings') : t('deployer.retrievingEstimates')}
             subtitle={t('deployer.retrievingEstimatesInfo')}
           />
         : <Table className="estimates" columns={columns} dataSource={dataSource} pagination={false} showHeader={false} bordered size="small" />

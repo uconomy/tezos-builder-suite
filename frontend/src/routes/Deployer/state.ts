@@ -16,6 +16,7 @@ export type DeployerState = {
   estimates?: Estimate;
   operationHash?: string;
   contractAddress?: string;
+  signWith?: 'wallet' | 'faucet' | 'privateKey';
 };
 
 const deplyInitialState: DeployerState = {
@@ -28,7 +29,8 @@ const deplyInitialState: DeployerState = {
   wallet: undefined,
   estimates: undefined,
   operationHash: undefined,
-  contractAddress: undefined
+  contractAddress: undefined,
+  signWith: undefined,
 };
 
 const { useGlobalState } = createGlobalState<DeployerState>(deplyInitialState);

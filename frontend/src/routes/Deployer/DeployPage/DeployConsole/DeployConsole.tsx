@@ -11,9 +11,15 @@ import { SignerManager } from './SignerManager';
 import "./DeployConsole.css";
 
 export const DeployConsole: React.FC = () => {
-  const { data, loading } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
+  const { data, loading, error } = useQuery<{ endpoint: Endpoint }>(GET_ENDPOINT);
   
   const { t } = useTranslation();
+
+  if (!data || loading || error) {
+    return null;
+  }
+
+  const endpoint = data?.endpoint;
 
   return (
     <div className="deploy-console">
@@ -21,8 +27,8 @@ export const DeployConsole: React.FC = () => {
         className="network"
         loading={loading}
         Icon={GlobalOutlined}
-        title={t('deployer.networkWarning')}
-        subtitle={t('deployer.networkEndpoint', { endpoint: data?.endpoint.url })}
+        title={t('deployer.networkWarning', { scope: t(`deployer.network.scope.${endpoint.scope}`) })}
+        subtitle={t('deployer.networkEndpoint', { endpoint: endpoint.url })}
       />
       <SignerManager />
       <DeployManager />

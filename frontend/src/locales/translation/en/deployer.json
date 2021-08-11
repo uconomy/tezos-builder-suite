@@ -52,11 +52,22 @@
   "retrievingEstimates": "Retrieving estimates...",
   "retrievingEstimatesInfo": "Results will be present in a few.",
   "aknowledgeEstimates": "Aknowledge Estimates",
-  "networkWarning": "You are going to deploy on MainNet!",
+  "network": {
+    "scope": {
+      "mainnet": "MainNet",
+      "testnet": "TestNet",
+      "sandbox": "Sandbox"
+    }
+  },
+  "networkWarning": "You are going to deploy on {{scope}}!",
   "networkEndpoint": "Your are going to use endpoint: {{endpoint}}",
   "chooseSigner": "Choose origination signer",
-  "signerWarning": "{{signer}} will sign and pay for the origination",
-  "signerWarningInfo": "Once you start deploying the contract, the action won't be cancelable nor undoable.",
+  "signerWarning": {
+    "wallet": "{{signer}} will sign and pay for the origination",
+    "faucet": "Faucet account {{signer}} will sign and pay for the origination",
+    "privateKey": "An account with private key \"{{signer}}\" will sign and pay for the origination"
+  },
+  "signerWarningInfo": "Once you start deploying the contract, the operation won't be cancelable nor undoable.",
   "changeSigner": "Change operation signer",
   "deploy": "Deploy Contract \"{{name}}\"!",
   "operationForged": "Operation {{hash}} was forged",

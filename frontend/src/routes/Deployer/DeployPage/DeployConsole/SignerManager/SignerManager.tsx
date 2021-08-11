@@ -2,13 +2,14 @@ import { UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useQuery } from '@apollo/client';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { TezosToolkit } from '@taquito/taquito';
+import { importKey, InMemorySigner } from '@taquito/signer';
 import { Button } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
-import { ProgressCard } from '../../../../../shared/ProgressCard';
 import { useDeployState } from '../../../state';
 import "./SignerManager.css";
+import { SignerCard } from './SignerCard';
 
 
 export const SignerManager: React.FC = () => {
@@ -19,6 +20,7 @@ export const SignerManager: React.FC = () => {
   const [Tezos, setTezosToolkit] = useDeployState('Tezos');
   const [wallet, setWallet] = useDeployState('wallet');
   const [signer, setSigner] = useDeployState('signer');
+  const [signWith, setSignedWith] = useDeployState('signWith');
   const [opHash] = useDeployState('operationHash');
 
   useEffect(() => {
@@ -33,8 +35,22 @@ export const SignerManager: React.FC = () => {
     setTezosToolkit(new TezosToolkit(data.endpoint.url));
   }, [Tezos, data, loading, error, setTezosToolkit]);
 
-  useEffect(() => {
+  const setupWallet = useCallback(() => {
     if (wallet) {
+      return;
+    }
+
+    const w = new BeaconWallet({
+      name: t('deployer.signer.wallet.name'),
+      disclaimerText: t('deployer.signer.wallet.disclaimerText')
+    });
+
+    setSignedWith('wallet');
+    setWallet(w);
+  }, [wallet, setWallet, setSignedWith, t]);
+
+  useEffect(() => {
+    if (wallet || signer) {
       return;
     }
 
@@ -45,21 +61,40 @@ export const SignerManager: React.FC = () => {
     if (!data || loading || error) {
       return;
     }
-    
-    const w = new BeaconWallet({
-      name: t('deployer.signer.wallet.name'),
-      disclaimerText: t('deployer.signer.wallet.disclaimerText')
-    });
 
-    setWallet(w);
-  }, [t, wallet, Tezos, data, loading, error, setWallet]);
+    const endpoint = data.endpoint;
+    if (endpoint.scope === 'mainnet' || (endpoint.scope === 'testnet' && !endpoint.faucet && !endpoint.signerPrivateKey)) {
+      setupWallet();
+    } else {
+      if (endpoint.faucet) {
+        const { email, password, mnemonic, secret } = endpoint.faucet;
+
+        // Mnemonic gets always as string from backend
+        importKey(Tezos, email, password, mnemonic as string, secret);
+
+        setSigner(email);
+        setSignedWith('faucet');
+      } else if (endpoint.signerPrivateKey) {
+        const pk = endpoint.signerPrivateKey;
+
+        Tezos.setProvider({
+          signer: new InMemorySigner(pk)
+        });
+
+        setSigner(`${pk.substring(0, 3)}...${pk.substring(pk.length - 4)}`);
+        setSignedWith('privateKey');
+      }
+    }
+  }, [t, wallet, signer, Tezos, data, loading, error, setupWallet, setSigner, setSignedWith]);
 
   const handleSetupSigner = useCallback(async () => {
     if (!Tezos || !wallet || !data) {
       return;
     }
 
-    await wallet.requestPermissions({ network: { type: data.endpoint.protocolVersion } });
+    await wallet.requestPermissions({ 
+      network: { type: data.endpoint.protocolVersion },
+    });
 
     const address = await wallet.getPKH();
     
@@ -82,15 +117,9 @@ export const SignerManager: React.FC = () => {
 
   return (
     <div className="signer-manager">
-      {!!signer &&
-        <ProgressCard
-          Icon={UserOutlined}
-          title={t('deployer.signerWarning', { signer })}
-          subtitle={t('deployer.signerWarningInfo')}
-        />
-      }
+      <SignerCard signer={signer} signWith={signWith} />
 
-      { !opHash &&
+      { (signWith === 'wallet' && !opHash) &&
       <div className="call-to-action">
         { !signer 
           ? <Button 
