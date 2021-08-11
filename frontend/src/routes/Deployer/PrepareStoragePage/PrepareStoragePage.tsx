@@ -39,6 +39,10 @@ export const PrepareStoragePage: React.FC = () => {
     history.push('check-contract');
   }, [history]);
 
+  const onFinish = useCallback(() => {
+    history.push('preview');
+  }, [history]);
+
   if (!contract) {
     history.push('choose-contract');
 
@@ -55,7 +59,7 @@ export const PrepareStoragePage: React.FC = () => {
       <Content className="page-content">
         <Tabs defaultActiveKey="1" className="page-tabs">
           <TabPane tab={t('deployer.storage.content')} key="1">
-            <StorageBuilder unwrappedMichelson={unwrappedMichelson} />
+            <StorageBuilder unwrappedMichelson={unwrappedMichelson} onFinish={onFinish} />
           </TabPane>
           <TabPane tab={t('deployer.storage.jsonMichelson')} key="2">
             <CodeViewer code={michelsonStorage?.getMichelsonStorage() || "..."} language="json" className="code-viewer" />

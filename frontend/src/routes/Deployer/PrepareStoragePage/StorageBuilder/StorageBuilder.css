@@ -85,3 +85,18 @@
   margin: 0;
   border: 0;
 }
+
+.progress-card.validation-error {
+  background: rgba(255,0,0,0.2);
+  border: 1px solid #F00;
+  align-items: flex-start;
+}
+
+.progress-card.validation-error .icon-color {
+  color: #F00;
+}
+
+.progress-card.validation-error pre {
+  margin: 12px 0;
+  width: 100%;
+}

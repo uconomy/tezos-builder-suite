@@ -35,7 +35,7 @@ export const Summary: React.FC = () => {
       className="summary-spacer" 
       icon={<SaveOutlined />}
       disabled={!activeForm}
-      onClick={() => { activeForm?.submit(); history.push('preview') }}
+      onClick={() => { activeForm?.submit(); }}
     >
       {t(`deployer.verifyAndSaveStorage`)}
     </Button>

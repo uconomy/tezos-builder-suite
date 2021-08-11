@@ -89,7 +89,6 @@ export class StorageImporter {
 
   fromJSON(json: any, structure: UnwrappedMichelsonObject[] = this.unwrappedStorage, isFirstLevel: boolean = true) {
     const storage: any = {};
-
     if (Array.isArray(json) || typeof json === 'object') {
       const firsLevelKeys = Object.keys(json);
       firsLevelKeys.forEach(prop => {
@@ -101,7 +100,7 @@ export class StorageImporter {
         }
         
         if (!propStructure) {
-          console.log('Failed to find a strucure for prop', prop);
+          console.log('Failed to find a strucure for prop', prop, structure);
           throw new Error('Invalid JSON provided.');
         }
 

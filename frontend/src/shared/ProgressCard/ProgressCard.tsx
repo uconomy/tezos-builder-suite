@@ -12,7 +12,7 @@ export interface ProgressCardProps {
 };
 
 export const ProgressCard: React.FC<ProgressCardProps> = (props) => {
-  const { className,Icon, loading, title, subtitle } = props;
+  const { className,Icon, loading, title, subtitle, children } = props;
 
   return (
     <div className={`progress-card${className ? ` ${className}` : ''}`}>
@@ -20,6 +20,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = (props) => {
       <div className="progress-card-message">
         <label className="title">{title}</label>
         {subtitle && <span className="subtitle">{subtitle}</span>}
+        {children}
       </div>
     </div>
   );

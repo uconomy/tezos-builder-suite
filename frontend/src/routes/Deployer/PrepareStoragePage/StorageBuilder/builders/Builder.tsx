@@ -30,11 +30,11 @@ const colors: { [x in MichelsonPrims]: TagColor } = {
   [MichelsonPrims.OR]: 'lime',
 };
 
-function extractAnnots(index: number, annots?: string) {
+export function extractAnnots(index: number, annots?: string[]) {
   if (!annots)
     return (Math.floor(index).toString());
 
-  return annots.toString().substring(1);
+  return annots.join(' ').substring(1);
 }
 
 export interface BuilderProps {
@@ -58,7 +58,7 @@ export const Builder: React.FC<BuilderProps> = (props) => {
   } = props;
   
   const { t } = useTranslation();
-  const name = extractAnnots(index, object.annots?.join(' '));
+  const name = extractAnnots(index, object.annots);
   
   return (
     <div className={`builder-block${className ? ` ${className}` : ''}`}>

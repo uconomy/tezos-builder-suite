@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import React from "react";
 
 import "../StorageBuilder.css";
-import { Builder, BuilderProps } from "./Builder";
+import { Builder, BuilderProps, extractAnnots } from "./Builder";
 import { UnwrappedMichelsonObject } from '../../michelsonStorageParser';
 import { renderBuilder } from '.';
 
@@ -29,8 +29,8 @@ export const MapBuilder: React.FC<BuilderProps> = (props) => {
         { list.length > 1
           ? list.map((item, index) => (
               renderBuilder({ ...item }, index, {
-                name: [data.name, name, index.toString()],
-                fieldKey: [data.fieldKey, name, index.toString()],
+                name: [data.name, name, extractAnnots(index, item?.annots)],
+                fieldKey: [data.fieldKey, name, extractAnnots(index, item?.annots)],
                 rules: [{ required: true }]
               })
             ))

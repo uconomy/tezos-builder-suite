@@ -27,6 +27,8 @@
     "deploy": "Deploy"
   },
   "verifyAndSaveStorage": "Verify and save",
+  "storageValidationError": "{{name}} while validating generated storage",
+  "storageValidationErrorInfo": "Please report this at https://github.com/uconomy/tezos-beacon-remote",
   "previewOrigination": "Preview Origination",
   "signer": {
     "loadingEndpointSettings": "Loading Tezos endpoint settings...",
