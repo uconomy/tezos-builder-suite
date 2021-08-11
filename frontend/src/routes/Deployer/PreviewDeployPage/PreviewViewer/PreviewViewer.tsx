@@ -111,7 +111,7 @@ export const PreviewViewer: React.FC = () => {
         let value = (estimate as any)[name] as number;
         let type = types[name];
 
-        if (type === 'mutez' && value > 1000000) {
+        if ((type === 'mutez' && value > 1000000) || name === 'totalCost') {
           type = 'tez';
           value /= 1000000;
         }
