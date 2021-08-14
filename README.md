@@ -36,7 +36,7 @@ If you want to include this package in your toolchain, please refer to the actua
 ## Contributing
 We'd definitely love to have your contributions to this package.
 
-If you want to write some code, we'll be more than happy to review and discuss every PR. Please refer to our [Contributing guide](./CONTRIBUTING.md) to discover how to work on this repository and how to subit your PRs.
+If you want to write some code, we'll be more than happy to review and discuss every PR. Please refer to our [Contributing guide](./CONTRIBUTING.md) to discover how to work on this repository and how to submit your PRs.
 
 If you like this project, please consider donating to help it evolve along with Tezos ecosystem and protocol updates. As you can imagine, this requires a lot of time and effort, and any donation will support us. [Reach us in any support channel](#lets-get-in-touch) to find how to donate in your preferred way.
 
