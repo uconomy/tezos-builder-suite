@@ -52,31 +52,31 @@ export const PreviewViewer: React.FC = () => {
 
     setPreviewError(undefined);
 
-    const LocalTezos = new TezosToolkit("https://testnet-tezos.giganode.io/");
+    const LocalTezos = new TezosToolkit("https://granadanet.smartpy.io/");
 
     const faucet = {
       "mnemonic": [
-        "home",
-        "project",
-        "ladder",
-        "wrestle",
-        "job",
-        "opera",
-        "diesel",
-        "pelican",
-        "abuse",
-        "regret",
-        "thought",
-        "copy",
-        "jar",
-        "lens",
-        "update"
+        "hub",
+        "table",
+        "rough",
+        "whale",
+        "shield",
+        "actor",
+        "egg",
+        "upgrade",
+        "collect",
+        "simple",
+        "bicycle",
+        "daughter",
+        "catalog",
+        "truth",
+        "twice"
       ],
-      "secret": "8590ffddd7accb49fbb530ef24ff659b1f01314f",
-      "amount": "8446026769",
-      "pkh": "tz1PXAMbT7qszu7kzTCdbf6ZWJ5draAqSQCz",
-      "password": "1VnbD0Fpmv",
-      "email": "cxjfzamw.rpqmqqvb@tezos.example.org"
+      "secret": "95718ff7a1512bdce2322d41642ff27d935bc334",
+      "amount": "134592037796",
+      "pkh": "tz1LNRBs1hxarBfxT7dCaTN8nYFAB1X7i93T",
+      "password": "HnuO5G9w0L",
+      "email": "umnyxgux.jtdcwiyt@tezos.example.org"
     };
     try {
       importKey(LocalTezos, faucet.email, faucet.password, faucet.mnemonic.join(' '), faucet.secret);
