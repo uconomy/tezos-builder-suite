@@ -14,22 +14,14 @@ export class StorageImporter {
   private _buildList(el: any[], structure: SimpleMichelsonObject & UnwrappedStructure) {
     const { prim, args, annots, value } = structure;
 
-    // Provide typecheck to MichelsonMap
-    const map = new MichelsonMap({ prim, args, annots });
+    // console.log("LIST EL", el);
+    // console.log("LIST STRUCT", structure);
 
     if (!value || !el || !el.length) {
-      return map;
-    } 
+      return [];
+    }
 
-    // Fill the list/set
-    el.forEach((item, index) => {
-      // Parse eventual sub-structures
-      const value = this.fromJSON(item, structure.value, false);
-
-      map.set(index, value);
-    });
-
-    return map;
+    return el;
   }
 
   private _buildMap(el: any[], structure: ComplexMichelsonObject & UnwrappedStructure) {

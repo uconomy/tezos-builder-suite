@@ -10,6 +10,7 @@ import { IntBuilder } from './IntBuilder';
 import { NatBuilder } from './NatBuilder';
 import { MutezBuilder } from './MutezBuilder';
 import { TimestampBuilder } from './TimestampBuilder';
+import { SetBuilder } from './SetBuilder';
 
 export const renderBuilder = (o: UnwrappedMichelsonObject, index: number, itemProps?: FormItemProps) => {
   switch (o.prim) {
@@ -30,6 +31,9 @@ export const renderBuilder = (o: UnwrappedMichelsonObject, index: number, itemPr
       return <MapBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
     case 'or':
       return <OrBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
+    case 'set':
+    case 'list':
+      return <SetBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
     default:
       return <StringBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
     // default:

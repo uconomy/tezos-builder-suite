@@ -62,6 +62,7 @@ export class MichelsonStorageParser {
   private processBlock(block: UnwrappedMichelsonObject): UnwrappedMichelsonObject[] {
     switch(block.prim) {
       case 'list':
+      case 'set':
         const list = block as SimpleMichelsonObject;
 
         const list_args = list.args;
