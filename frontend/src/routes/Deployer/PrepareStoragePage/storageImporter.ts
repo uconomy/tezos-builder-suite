@@ -12,10 +12,7 @@ export class StorageImporter {
   }
 
   private _buildList(el: any[], structure: SimpleMichelsonObject & UnwrappedStructure) {
-    const { prim, args, annots, value } = structure;
-
-    // console.log("LIST EL", el);
-    // console.log("LIST STRUCT", structure);
+    const { value } = structure;
 
     if (!value || !el || !el.length) {
       return [];

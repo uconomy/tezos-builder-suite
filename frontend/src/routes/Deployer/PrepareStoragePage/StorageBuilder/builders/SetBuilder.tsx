@@ -73,7 +73,6 @@ export const SetBuilder: React.FC<BuilderProps> = (props) => {
 
             return (
               <div className={ fields.length > 0 ? "list-block-spacer" : undefined }>
-                <div>{JSON.stringify(object, null, 2)}</div>
                 {fields.length > 0 && <Table columns={columns} dataSource={fields} className="list-table" bordered pagination={false} />}
                 <Button
                   type="dashed"

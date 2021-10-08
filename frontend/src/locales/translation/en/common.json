@@ -10,6 +10,7 @@
     "string": "String",
     "address": "Address",
     "storage": "Storage",
+    "set": "Set",
     "list": "List",
     "map": "Map",
     "big_map": "Big Map",
