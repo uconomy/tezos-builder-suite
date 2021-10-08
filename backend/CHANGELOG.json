@@ -1,0 +1,17 @@
+{
+  "name": "tezos-builder-suite",
+  "entries": [
+    {
+      "version": "0.1.2",
+      "tag": "tezos-builder-suite_v0.1.2",
+      "date": "Fri, 08 Oct 2021 16:20:43 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Set/Lists support in StorageBuilder"
+          }
+        ]
+      }
+    }
+  ]
+}
