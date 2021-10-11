@@ -12,8 +12,8 @@ export const BoolBuilder: React.FC<BuilderProps> = (props) => {
   } = props;
   
   return (
-    <Builder object={object} index={index} itemProps={{ ...itemProps, valuePropName: "checked" }}>
-      <Switch />
+    <Builder object={object} index={index} itemProps={{ ...itemProps, valuePropName: "checked", initialValue: false }}>
+      <Switch/>
     </Builder>
   );
 }
