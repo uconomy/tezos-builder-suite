@@ -60,7 +60,7 @@ export class StorageImporter {
     return null;
   }
 
-  private _parse(el: any, structure: UnwrappedMichelsonObject) {
+  private _parse(el: any, structure: UnwrappedMichelsonObject): any {
     switch (structure.prim) {
       case 'list':
       case 'set':
@@ -76,6 +76,8 @@ export class StorageImporter {
       case 'int':
       case 'mutez':
         return new BigNumber(el);
+      case 'record':
+        return this.fromJSON(el, structure.args);
       default:
         return el; 
     }
