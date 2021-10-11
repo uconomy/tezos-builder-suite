@@ -11,6 +11,7 @@ import { NatBuilder } from './NatBuilder';
 import { MutezBuilder } from './MutezBuilder';
 import { TimestampBuilder } from './TimestampBuilder';
 import { SetBuilder } from './SetBuilder';
+import { RecordBuilder } from './RecordBuilder';
 
 export const renderBuilder = (o: UnwrappedMichelsonObject, index: number, itemProps?: FormItemProps) => {
   switch (o.prim) {
@@ -34,6 +35,8 @@ export const renderBuilder = (o: UnwrappedMichelsonObject, index: number, itemPr
     case 'set':
     case 'list':
       return <SetBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
+    case 'record':
+      return <RecordBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
     default:
       return <StringBuilder key={`storage-${index}`} object={o} index={index} itemProps={itemProps} />
     // default:

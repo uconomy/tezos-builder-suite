@@ -1,6 +1,11 @@
 import { MichelsonMap } from "@taquito/taquito";
 import { BigNumber } from 'bignumber.js';
-import { ComplexMichelsonObject, MichelsonStorageParser, SimpleMichelsonObject, UnwrappedMichelsonObject, UnwrappedStructure } from "./michelsonStorageParser";
+import { 
+  MichelsonStorageParser,
+  UnwrappedMichelsonObject,
+  UnwrappedSimpleMichelsonObject,
+  UnwrappedComplexMichelsonObject,
+} from "./michelsonStorageParser";
 
 export class StorageImporter {
   private unwrappedStorage: UnwrappedMichelsonObject[];
@@ -11,7 +16,7 @@ export class StorageImporter {
     this.unwrappedStorage = structure.unwrapStorage();
   }
 
-  private _buildList(el: any[], structure: SimpleMichelsonObject & UnwrappedStructure) {
+  private _buildList(el: any[], structure: UnwrappedSimpleMichelsonObject) {
     const { value } = structure;
 
     if (!value || !el || !el.length) {
@@ -21,7 +26,7 @@ export class StorageImporter {
     return el;
   }
 
-  private _buildMap(el: any[], structure: ComplexMichelsonObject & UnwrappedStructure) {
+  private _buildMap(el: any[], structure: UnwrappedComplexMichelsonObject) {
     const { prim, args, annots, value, key } = structure;
 
     // Provide typecheck to MichelsonMap
@@ -42,7 +47,7 @@ export class StorageImporter {
     return map;
   }
 
-  _buildOr(el: any, structure: ComplexMichelsonObject & UnwrappedStructure) {
+  _buildOr(el: any, structure: UnwrappedComplexMichelsonObject) {
     if (structure.value) {
       const found = structure.value.find(x => x.prim === 'unit' && x.annots?.join(' ') === `${el}`);
       if (found) {
@@ -59,12 +64,12 @@ export class StorageImporter {
     switch (structure.prim) {
       case 'list':
       case 'set':
-        return this._buildList(el, structure);
+        return this._buildList(el, structure as UnwrappedSimpleMichelsonObject);
       case 'map':
       case 'big_map':
-        return this._buildMap(el, structure);
+        return this._buildMap(el, structure as UnwrappedComplexMichelsonObject);
       case 'or':
-        return this._buildOr(el, structure);
+        return this._buildOr(el, structure as UnwrappedComplexMichelsonObject);
       case 'unit':
         return null;
       case 'nat':

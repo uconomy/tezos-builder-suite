@@ -8,7 +8,7 @@ import "../StorageBuilder.css";
 
 type TagColor = TagProps['color'];
 
-const colors: { [x in MichelsonPrims]: TagColor } = {
+const colors: { [x in UnwrappedMichelsonObject['prim']]: TagColor } = {
   [MichelsonPrims.UNIT]: 'magenta',
   [MichelsonPrims.BOOL]: 'yellow',
   [MichelsonPrims.BYTES]: 'blue',
@@ -28,6 +28,7 @@ const colors: { [x in MichelsonPrims]: TagColor } = {
   [MichelsonPrims.BIG_MAP]: 'purple',
   [MichelsonPrims.PAIR]: 'lime',
   [MichelsonPrims.OR]: 'lime',
+  "record": 'lime',
 };
 
 export function extractAnnots(index: number, annots?: string[]) {

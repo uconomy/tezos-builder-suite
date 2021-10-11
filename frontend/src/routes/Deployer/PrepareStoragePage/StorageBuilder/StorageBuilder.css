@@ -49,7 +49,12 @@
 
 .builder-block.list-block {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.builder-block.list-block .list-add-button {
+  display: flex;
+  flex-grow: 1;
 }
 
 .builder-block.list-block .list-block-spacer {
@@ -76,7 +81,6 @@
 }
 
 .builder-block.list-block .builder-block-label:first-of-type {
-  width: 100%;
   min-height: 32px;
 }
 
@@ -100,3 +104,15 @@
   margin: 12px 0;
   width: 100%;
 }
+
+.builder-block.record-block {
+  align-items: flex-start;
+}
+
+.builder-block.record-block .builder-block:first-of-type {
+  margin-top: 2.5em;
+}
+
+/* .builder-block:hover {
+  background-color: #fffdf4;
+} */

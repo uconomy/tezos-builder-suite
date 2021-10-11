@@ -64,7 +64,10 @@ export const PrepareStoragePage: React.FC = () => {
           <TabPane tab={t('deployer.storage.jsonMichelson')} key="2">
             <CodeViewer code={michelsonStorage?.getMichelsonStorage() || "..."} language="json" className="code-viewer" />
           </TabPane>
-          <TabPane tab={t('deployer.storage.contractCode')} key="3">
+          <TabPane tab={t('deployer.storage.unwrappedMichelson')} key="3">
+            <CodeViewer code={JSON.stringify(unwrappedMichelson || "...", null, 2)} language="json" className="code-viewer" />
+          </TabPane>
+          <TabPane tab={t('deployer.storage.contractCode')} key="4">
             <CodeViewer code={contract.code} fileName={contract.name} className="code-viewer" />
           </TabPane>
         </Tabs>

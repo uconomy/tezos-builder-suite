@@ -15,6 +15,7 @@
     "map": "Map",
     "big_map": "Big Map",
     "pair": "Pair",
+    "record": "Record",
     "or": "Logical OR"
   },
   "tryAgain": "Try again",

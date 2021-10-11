@@ -39,12 +39,25 @@ export type ComplexMichelsonObject = {
 
 export type MichelsonObject = (PlainMichelsonObject | SimpleMichelsonObject | ComplexMichelsonObject);
 
-export type UnwrappedStructure = {
-  key?: MichelsonObject[];
-  value?: MichelsonObject[];
+/**
+ * Unwrapped Michelson Objects
+ */
+export type UnwrappedSimpleMichelsonObject = SimpleMichelsonObject & {
+  value: UnwrappedMichelsonObject[];
 };
 
-export type UnwrappedMichelsonObject = MichelsonObject & UnwrappedStructure;
+export type UnwrappedComplexMichelsonObject = ComplexMichelsonObject & {
+  key: UnwrappedMichelsonObject[];
+  value: UnwrappedMichelsonObject[];
+};
+
+export type UnwrappedRecord = {
+  prim: 'record';
+  args: UnwrappedMichelsonObject[],
+  annots: string[];
+};
+
+export type UnwrappedMichelsonObject = MichelsonObject | UnwrappedSimpleMichelsonObject | UnwrappedComplexMichelsonObject | UnwrappedRecord;
 
 export class MichelsonStorageParser {
   michelsonStorage: SimpleMichelsonObject;
@@ -85,7 +98,7 @@ export class MichelsonStorageParser {
           key: big_map_key,
           value: big_map_value,
         }];
-        case 'or':
+      case 'or':
           const or = block as ComplexMichelsonObject;
   
           const or_args = or.args;
@@ -96,10 +109,23 @@ export class MichelsonStorageParser {
             ...or,
             value: [...or_args1, ...or_args2],
           }];
-      case 'pair':
-        return block.args as [MichelsonObject, MichelsonObject];
       default:
         return [block];
+    }
+  }
+
+  private unwrapPair(block: ComplexMichelsonObject): UnwrappedMichelsonObject[] {
+    if (block.annots) {
+      return [{
+        prim: 'record',
+        annots: block.annots,
+        args: [
+          ...this.unwrapBlock([ block.args[0] ]),
+          ...this.unwrapBlock([ block.args[1] ]),
+        ]
+      }]
+    } else {
+      return this.unwrapBlock(block.args);
     }
   }
 
@@ -107,21 +133,14 @@ export class MichelsonStorageParser {
     let res: UnwrappedMichelsonObject[] = [];
 
     block.forEach(x => {
-      res.push(...this.processBlock(x));
+      if (x.prim === 'pair') {
+        res.push(...this.unwrapPair(x))
+      } else {
+        res.push(...this.processBlock(x));
+      }
     });
 
-    // If there are pairs, process those before
-    if (res.find(x => x.prim === 'pair')) {
-      return this.unwrapBlock(res);
-    }
-
-    // ...and the process the rest
-    const finalCicle: UnwrappedMichelsonObject[] = [];
-    res.forEach(x => {
-      finalCicle.push(...this.processBlock(x));
-    });
-
-    return finalCicle;
+    return res;
   }
 
   unwrapStorage() {

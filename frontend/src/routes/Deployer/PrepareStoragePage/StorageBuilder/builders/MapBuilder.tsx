@@ -5,7 +5,7 @@ import React from "react";
 
 import "../StorageBuilder.css";
 import { Builder, BuilderProps, extractAnnots } from "./Builder";
-import { UnwrappedMichelsonObject } from '../../michelsonStorageParser';
+import { UnwrappedComplexMichelsonObject, UnwrappedMichelsonObject } from '../../michelsonStorageParser';
 import { renderBuilder } from '.';
 
 interface FormListFieldData {
@@ -55,13 +55,13 @@ export const MapBuilder: React.FC<BuilderProps> = (props) => {
                 title: t(`key`),
                 dataInde: 'key',
                 key: 'key',
-                render: (data: FormListFieldData) => renderMapBuilders('0', data, object.key as UnwrappedMichelsonObject[])
+                render: (data: FormListFieldData) => renderMapBuilders('0', data, (object as UnwrappedComplexMichelsonObject).key)
               },
               {
                 title: t(`value`),
                 dataInde: 'value',
                 key: 'value',
-                render: (data: FormListFieldData) => renderMapBuilders('1', data, object.value as UnwrappedMichelsonObject[])
+                render: (data: FormListFieldData) => renderMapBuilders('1', data, (object as UnwrappedComplexMichelsonObject).value)
               },
               {
                 className: 'actions',
@@ -72,7 +72,7 @@ export const MapBuilder: React.FC<BuilderProps> = (props) => {
             ];
 
             return (
-              <div className={ fields.length > 0 ? "list-block-spacer" : undefined }>
+              <div className={ fields.length > 0 ? "list-block-spacer" : "list-add-button" }>
                 {fields.length > 0 && <Table columns={columns} dataSource={fields} className="list-table" bordered pagination={false} />}
                 <Button
                   type="dashed"
