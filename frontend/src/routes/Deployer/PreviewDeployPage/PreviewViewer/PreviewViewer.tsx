@@ -13,6 +13,7 @@ import { TezosToolkit } from '@taquito/taquito';
 import { importKey } from '@taquito/signer';
 
 type ResultLine = {
+  key: string;
   value: number;
   name: string;
   type: 'tez'| 'mutez' | 'number' | 'bytes';
@@ -107,7 +108,7 @@ export const PreviewViewer: React.FC = () => {
     }
 
     const estimatesData: Results = Object.keys(types)
-      .map(name => {
+      .map((name, index) => {
         let value = (estimate as any)[name] as number;
         let type = types[name];
 
@@ -121,6 +122,7 @@ export const PreviewViewer: React.FC = () => {
         }
 
         return {
+          key: `result-${index}`,
           name,
           value,
           type
