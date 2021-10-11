@@ -1,6 +1,6 @@
 {
   "name": "tezos-builder-suite",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "All-in-one library to work with Beacon SDK within Node.js",
   "main": "build/index.js",
   "types": "build/index.d.ts",
