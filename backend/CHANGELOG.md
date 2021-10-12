@@ -1,6 +1,13 @@
 # Change Log - tezos-builder-suite
 
-This log was last generated on Fri, 08 Oct 2021 17:15:01 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Oct 2021 10:38:08 GMT and should not be manually modified.
+
+## 0.2.2
+Tue, 12 Oct 2021 10:38:08 GMT
+
+### Patches
+
+- Fix frontend serving
 
 ## 0.1.3
 Fri, 08 Oct 2021 17:15:01 GMT
