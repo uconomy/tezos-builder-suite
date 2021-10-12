@@ -1,5 +1,4 @@
 import express from 'express';
-import serveStatic from 'serve-static';
 import open from 'open';
 import path from 'path';
 import { createApolloServer, schema } from './graphql';
@@ -44,7 +43,11 @@ export async function launchDeployer(context: TezosBuilderSuiteContext, options?
   }));
 
   // Serve frontend bundle
-  app.use(serveStatic(path.resolve(__dirname, 'frontend')));
+  app.use(express.static(path.resolve(__dirname, 'frontend')));
+
+  app.get('*', function (request, response) {
+    response.sendFile(path.resolve(__dirname, 'frontend', 'index.html'));
+  });
 
   // Server startup
   await new Promise<void>(resolve => app.listen({ port: port }, () => resolve()));
