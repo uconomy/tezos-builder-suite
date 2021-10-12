@@ -21,6 +21,7 @@
   "storage": {
     "content": "Storage",
     "jsonMichelson": "Storage structure",
+    "unwrappedMichelson": "Unwrapped Michelson",
     "contractCode": "Contract code",
     "storageContent": "Storage Content",
     "preview": "Deploy preview",
