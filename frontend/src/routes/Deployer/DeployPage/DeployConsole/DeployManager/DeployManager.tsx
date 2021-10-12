@@ -7,7 +7,7 @@ import { ProgressCard } from '../../../../../shared/ProgressCard';
 import { useDeployState } from '../../../state';
 
 import "./DeployManager.css";
-import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
+import { Endpoint, GET_ENDPOINT, NetworkType } from '../../../../../graphql/endpoint';
 import { Contract, CONTRACT_DEPLOY_COMPLETED } from '../../../../../graphql/contract';
 
 export const DeployManager: React.FC = () => {
@@ -56,6 +56,7 @@ export const DeployManager: React.FC = () => {
   }, [Tezos, signer, contract, initialStorage, setOperationHash, setContractAddress, onDeployCompleted]);
 
   const protocolVersion = data?.endpoint.protocolVersion;
+  const isSandbox = data?.endpoint.scope === 'sandbox' || false;
 
   return (
     <div className="deploy-manager">
@@ -89,10 +90,12 @@ export const DeployManager: React.FC = () => {
           />
     }
 
+      { !isSandbox &&
       <div className="call-to-action">
-        { opHash && <a rel="noreferrer" href={`https://${protocolVersion !== 'mainnet' ? `${protocolVersion}.` : ''}tzkt.io/${opHash}`} target="_blank">View operation on tzkt.io</a> }
-        { contractAddress && <a rel="noreferrer" href={`https://better-call.dev/search?text=${contractAddress}`} target="_blank">View contract on better-call.dev</a> }
+        { opHash && <a rel="noreferrer" href={`https://${protocolVersion !== 'mainnet' ? `${protocolVersion}.` : ''}tzkt.io/${opHash}`} target="_blank">{t('deployer.external.viewOperationTzkt')}</a> }
+        { contractAddress && <a rel="noreferrer" href={`https://better-call.dev/search?text=${contractAddress}`} target="_blank">{t('deployer.external.viewContractBcd')}</a> }
       </div>
+      }
     </div>
   );
 }
