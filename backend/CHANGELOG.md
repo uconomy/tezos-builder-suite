@@ -1,6 +1,13 @@
 # Change Log - tezos-builder-suite
 
-This log was last generated on Tue, 12 Oct 2021 10:38:08 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Mar 2022 11:29:50 GMT and should not be manually modified.
+
+## 0.4.0
+Wed, 30 Mar 2022 11:29:50 GMT
+
+### Minor changes
+
+- Add support for Hangzhou and Ithaca networks
 
 ## 0.2.2
 Tue, 12 Oct 2021 10:38:08 GMT

@@ -2,6 +2,18 @@
   "name": "tezos-builder-suite",
   "entries": [
     {
+      "version": "0.4.0",
+      "tag": "tezos-builder-suite_v0.4.0",
+      "date": "Wed, 30 Mar 2022 11:29:50 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add support for Hangzhou and Ithaca networks"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.2.2",
       "tag": "tezos-builder-suite_v0.2.2",
       "date": "Tue, 12 Oct 2021 10:38:08 GMT",

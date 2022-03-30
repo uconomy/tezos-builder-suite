@@ -1,6 +1,6 @@
 {
   "name": "tezos-builder-suite",
-  "version": "0.2.2",
+  "version": "0.4.0",
   "description": "All-in-one library to work with Beacon SDK within Node.js",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -24,7 +24,7 @@
     "nodemon": "^2.0.12",
     "ts-jest": "^26.5.5",
     "ts-node": "^10.1.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "@apollo/federation": "^0.27.0",
