@@ -53,34 +53,35 @@ export const PreviewViewer: React.FC = () => {
 
     setPreviewError(undefined);
 
-    const LocalTezos = new TezosToolkit("https://granadanet.smartpy.io/");
+    const LocalTezos = new TezosToolkit("https://rpc.tzkt.io/hangzhou2net");
 
     const faucet = {
+      "pkh": "tz1bfrqkLcxWKe7S8VPAooQEdu1xhgx6pNdF",
       "mnemonic": [
-        "hub",
-        "table",
-        "rough",
-        "whale",
-        "shield",
-        "actor",
-        "egg",
-        "upgrade",
-        "collect",
-        "simple",
-        "bicycle",
-        "daughter",
-        "catalog",
-        "truth",
-        "twice"
+        "paper",
+        "purse",
+        "flock",
+        "monitor",
+        "hammer",
+        "seat",
+        "owner",
+        "teach",
+        "payment",
+        "nothing",
+        "eternal",
+        "math",
+        "bring",
+        "luxury",
+        "club"
       ],
-      "secret": "95718ff7a1512bdce2322d41642ff27d935bc334",
-      "amount": "134592037796",
-      "pkh": "tz1LNRBs1hxarBfxT7dCaTN8nYFAB1X7i93T",
-      "password": "HnuO5G9w0L",
-      "email": "umnyxgux.jtdcwiyt@tezos.example.org"
+      "email": "gtfdvyfi.jcpkaufh@teztnets.xyz",
+      "password": "HfDGi6fBCO",
+      "amount": "88934373267",
+      "activation_code": "94618f3b77e5f3a4b80a4e664b9948d910766e9d"
     };
+
     try {
-      importKey(LocalTezos, faucet.email, faucet.password, faucet.mnemonic.join(' '), faucet.secret);
+      importKey(LocalTezos, faucet.email, faucet.password, faucet.mnemonic.join(' '), faucet.activation_code);
     } catch(err) {
       console.log('FAILED TO IMPORT KEY', err);
     }
@@ -92,7 +93,7 @@ export const PreviewViewer: React.FC = () => {
       });
 
       setEstimates(op);
-    } catch(err) {
+    } catch(err: any) {
       setPreviewError(err);
     }
   }, [contract, initialStorage, data, loading, error, setEstimates, setPreviewError]);

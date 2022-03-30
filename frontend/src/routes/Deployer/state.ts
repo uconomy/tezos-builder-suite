@@ -3,7 +3,7 @@ import { FormInstance  } from 'antd';
 import { Contract } from '../../graphql/contract';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { TezosToolkit } from '@taquito/taquito';
-import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
+import { Estimate } from '@taquito/taquito/dist/types/estimate/estimate';
 
 export type DeployerState = {
   contract?: Contract;

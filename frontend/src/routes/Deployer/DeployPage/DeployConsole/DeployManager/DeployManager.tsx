@@ -7,7 +7,7 @@ import { ProgressCard } from '../../../../../shared/ProgressCard';
 import { useDeployState } from '../../../state';
 
 import "./DeployManager.css";
-import { Endpoint, GET_ENDPOINT, NetworkType } from '../../../../../graphql/endpoint';
+import { Endpoint, GET_ENDPOINT } from '../../../../../graphql/endpoint';
 import { Contract, CONTRACT_DEPLOY_COMPLETED } from '../../../../../graphql/contract';
 
 export const DeployManager: React.FC = () => {

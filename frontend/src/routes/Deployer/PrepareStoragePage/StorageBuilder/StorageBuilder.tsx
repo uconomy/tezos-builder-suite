@@ -57,7 +57,7 @@ export const StorageBuilder: React.FC<StorageBuilderProps> = ({ unwrappedMichels
 
       setInitialStorage(storage);
       onFinish();
-    } catch (err) {
+    } catch (err: any) {
       if (err.name.endsWith('TypecheckError')) {
         setError(err);
       }
