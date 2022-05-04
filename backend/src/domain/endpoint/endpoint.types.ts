@@ -19,4 +19,4 @@ export enum NetworkType {
   HANGZHOUNET = "hangzhounet",
   ITHACANET = "ithacanet",
   CUSTOM = "custom"
-};
+}

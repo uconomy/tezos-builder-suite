@@ -1,6 +1,6 @@
 export type FaucetAccount = {
   mnemonic: string | string[];
-  secret: string;
+  activation_code: string;
   amount: string; // mutez
   pkh: string;
   password?: string;

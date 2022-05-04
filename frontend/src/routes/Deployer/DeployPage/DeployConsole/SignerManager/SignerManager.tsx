@@ -67,10 +67,10 @@ export const SignerManager: React.FC = () => {
       setupWallet();
     } else {
       if (endpoint.faucet) {
-        const { email, password, mnemonic, secret } = endpoint.faucet;
+        const { email, password, mnemonic, activation_code } = endpoint.faucet;
 
         // Mnemonic gets always as string from backend
-        importKey(Tezos, email, password, mnemonic as string, secret);
+        importKey(Tezos, email, password, mnemonic as string, activation_code);
 
         setSigner(email);
         setSignedWith('faucet');
