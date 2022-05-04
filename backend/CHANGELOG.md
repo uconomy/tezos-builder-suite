@@ -1,6 +1,13 @@
 # Change Log - tezos-builder-suite
 
-This log was last generated on Wed, 30 Mar 2022 11:29:50 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 17:47:09 GMT and should not be manually modified.
+
+## 0.5.0
+Wed, 04 May 2022 17:47:09 GMT
+
+### Minor changes
+
+- Updated Taquito and upgraded Faucet accounts structure
 
 ## 0.4.0
 Wed, 30 Mar 2022 11:29:50 GMT
