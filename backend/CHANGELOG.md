@@ -1,6 +1,13 @@
 # Change Log - tezos-builder-suite
 
-This log was last generated on Wed, 04 May 2022 17:47:09 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 18:20:11 GMT and should not be manually modified.
+
+## 0.6.0
+Wed, 04 May 2022 18:20:11 GMT
+
+### Minor changes
+
+- Fixed broken Faucet transfer endpoints
 
 ## 0.5.0
 Wed, 04 May 2022 17:47:09 GMT

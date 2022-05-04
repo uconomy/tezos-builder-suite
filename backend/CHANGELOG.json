@@ -2,6 +2,18 @@
   "name": "tezos-builder-suite",
   "entries": [
     {
+      "version": "0.6.0",
+      "tag": "tezos-builder-suite_v0.6.0",
+      "date": "Wed, 04 May 2022 18:20:11 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Fixed broken Faucet transfer endpoints"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.0",
       "tag": "tezos-builder-suite_v0.5.0",
       "date": "Wed, 04 May 2022 17:47:09 GMT",
