@@ -7,7 +7,7 @@ export const typeDefs = gql`
 
   type FaucetAccount {
     mnemonic: String!
-    secret: String!
+    activation_code: String!
     amount: String!
     pkh: String!
     password: String

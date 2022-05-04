@@ -11,7 +11,7 @@ query GetEndpoint {
     signerPrivateKey
     faucet {
       mnemonic
-      secret
+      activation_code
       amount
       pkh
       password
